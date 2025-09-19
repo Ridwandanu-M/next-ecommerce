@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum RoleUser {
+  admin
+  customer
+}
+
+enum ProductStock {
+  ready
+  preorder
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String   @db.VarChar(255)
+  email    String   @unique @db.VarChar(255)
+  password String   @db.VarChar(255)
+  role     RoleUser @default(customer)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  Order      Order[]
+}
+
+model Location {
+  id      Int       @unique @default(autoincrement())
+  name    String    @db.VarChar(255)
+  Product Product[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Product {
+  id           Int            @id @default(autoincrement())
+  name         String         @db.VarChar(255)
+  desc         String         @db.Text
+  price        BigInt         @db.BigInt
+  categoryId   Int
+  category     Category       @relation(fields: [categoryId], references: [id])
+  locationId   Int
+  location     Location       @relation(fields: [locationId], references: [id])
+  stock        ProductStock
+  images       String[]
+  OrderProduct OrderProduct[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Product    Product[]
+}
+
+enum StatusOrder {
+  pending
+  success
+  failed
+}
+
+model Order {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.Text
+  user         User           @relation(fields: [userId], references: [id])
+  userId       Int
+  total        BigInt         @db.BigInt
+  statusOrder  StatusOrder
+  OrderProduct OrderProduct[]
+  OrderDetail  OrderDetail?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model OrderDetail {
+  id          Int     @unique @default(autoincrement())
+  orderId     Int     @unique
+  order       Order   @relation(fields: [orderId], references: [id])
+  name        String  @db.VarChar(255)
+  phone       String  @db.VarChar(255)
+  address     String  @db.VarChar(255)
+  city        String  @db.VarChar(255)
+  postal_code String  @db.VarChar(255)
+  notes       String? @db.VarChar(255)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model OrderProduct {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+  orderId   Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  quantity  Int
+  price     BigInt
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
