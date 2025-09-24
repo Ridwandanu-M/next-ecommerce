@@ -1,7 +1,6 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
-import NavTop from "@/component/NavTop";
-import NavBot from "@/component/NavBot";
+import NavBar from "@/component/NavBar";
 
 export const metadata = {
   title: "Beli.com",
@@ -12,11 +11,8 @@ export const metadata = {
 export default function HomeLayout({ children }) {
   return (
     <>
-      <header>
-        <NavTop />
-        <NavBot />
-      </header>
-      <main>{children}</main>
+      <NavBar />
+      <main className="mt-[9.6rem]">{children}</main>
     </>
   );
 }

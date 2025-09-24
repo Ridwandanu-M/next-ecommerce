@@ -15,25 +15,27 @@ export default function Brands() {
   const brandsLogo = [
     Asus_logo,
     Apple_logo,
-    Hp_logo,
+    Aoc_logo,
+
     Lenovo_logo,
     Samsung_logo,
     Huawei_logo,
     Msi_logo,
-    Aoc_logo,
+    Hp_logo,
+
     Gigabyte_logo,
   ];
 
   return (
     <div className="bg-[#111] py-6 overflow-hidden">
       <div>
-        <ul className="flex justify-between px-[1.2rem]">
+        <ul className="flex justify-center gap-[8.8rem] px-[1.2rem]">
           {brandsLogo.map((item, index) => (
             <Image
               key={index}
               src={item}
               alt="brand logo"
-              height={40}
+              height={30}
               className="filter brightness-0 invert"
             />
           ))}

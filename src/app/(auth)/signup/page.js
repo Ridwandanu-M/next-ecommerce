@@ -19,7 +19,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="h-[100vh] flex justify-center items-center">
+    <div>
       <div>
         <div className="text-center">
           <h1 className="text-[3.2rem] font-[600]">Sign Up</h1>
