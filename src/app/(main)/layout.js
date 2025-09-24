@@ -10,10 +10,10 @@ export const metadata = {
 
 export default function HomeLayout({ children }) {
   return (
-    <>
+    <section>
       <NavBar />
       <main className="mt-[9.6rem]">{children}</main>
-    </>
+    </section>
   );
 }
 

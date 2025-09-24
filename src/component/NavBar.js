@@ -50,11 +50,13 @@ export default async function NavBar() {
         <div className="flex gap-[1.8rem]">
           <ShoppingCart />
           <Bell />
-          <div className="flex items-center gap-[.4rem] text-[1.4rem] cursor-pointer">
-            <Link href={session ? "/" : "/signin"}>
-              <CircleUserRound />
+          <div className="text-[1.4rem] cursor-pointer">
+            <Link
+              href={session ? "/dashboard" : "/signin"}
+              className="flex items-center gap-[.4rem]"
+            >
+              <CircleUserRound /> {session ? `${session.user?.name}` : "Guest"}
             </Link>{" "}
-            {session ? `${session.user?.name}` : "Guest"}
           </div>
         </div>
       </div>

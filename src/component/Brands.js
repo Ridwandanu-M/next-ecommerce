@@ -16,13 +16,11 @@ export default function Brands() {
     Asus_logo,
     Apple_logo,
     Aoc_logo,
-
     Lenovo_logo,
     Samsung_logo,
     Huawei_logo,
     Msi_logo,
     Hp_logo,
-
     Gigabyte_logo,
   ];
 
