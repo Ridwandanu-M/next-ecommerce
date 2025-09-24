@@ -8,7 +8,7 @@ export default async function NavBot() {
 
   return (
     <div className="flex items-center gap-[8rem] border-y border-y-black/40 py-[.4rem] px-[1.8rem]">
-      <h1 className="text-[3.2rem]">Beli.com</h1>
+      <h1 className="text-[3.2rem] font-[700]">Beli.com</h1>
       <div className="w-full relative">
         <Search className="absolute left-[1.2rem] top-1/2 -translate-y-1/2 text-[#000]/50" />
         <input
