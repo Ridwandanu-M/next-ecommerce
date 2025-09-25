@@ -22,7 +22,7 @@ export default function Sidebar() {
     },
     {
       menu: "Wishlist",
-      path: "/wishlist",
+      path: "/dashboard/wishlist",
       icon: <Heart />,
     },
   ];

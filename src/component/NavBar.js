@@ -47,16 +47,33 @@ export default async function NavBar() {
             className="border border-black/40 h-[3.2rem] w-full text-[1.4rem] placeholder:text-[1.4rem] p-[1.4rem] pl-[4rem] focus:outline-none focus:ring"
           />
         </div>
-        <div className="flex gap-[1.8rem]">
+        <div className="flex items-center gap-[1.8rem]">
           <ShoppingCart />
           <Bell />
-          <div className="text-[1.4rem] cursor-pointer">
-            <Link
-              href={session ? "/dashboard" : "/signin"}
-              className="flex items-center gap-[.4rem]"
-            >
-              <CircleUserRound /> {session ? `${session.user?.name}` : "Guest"}
-            </Link>{" "}
+          <div>
+            {session ? (
+              <Link
+                href="/dashboard/profile"
+                className="flex items-center gap-[.8rem] text-[1.4rem]"
+              >
+                <CircleUserRound /> {session.user?.name}
+              </Link>
+            ) : (
+              <div className="flex gap-[.8rem]">
+                <Link
+                  href="/signin"
+                  className="bg-[#fff] border border-[#111] px-[3.2rem] py-[.8rem] text-[#111] font-[700] text-[1.2rem] text-nowrap hover:bg-[#111] hover:text-[#fff] hover:border-[#fff]"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/signup"
+                  className="bg-[#111] border border-[#111] px-[3.2rem] py-[.8rem] text-[#fff] font-[700] text-[1.2rem] text-nowrap hover:bg-[#fff] hover:text-[#111] hover:border-[#111]"
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
