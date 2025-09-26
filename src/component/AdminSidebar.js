@@ -27,7 +27,7 @@ export default function AdminSidebar() {
   ];
 
   return (
-    <nav className="w-[28rem] bg-[#111] text-[#fff] py-[2.4rem] px-[4rem]">
+    <nav className="w-[28rem] bg-[#111] text-[#fff] p-[3.2rem]">
       <div className="h-full flex flex-col justify-between">
         <div>
           <div>
