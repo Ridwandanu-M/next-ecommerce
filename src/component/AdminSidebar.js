@@ -1,6 +1,11 @@
 "use client";
 import Link from "next/link";
-import { Package2, SquareChartGantt, ArrowRightLeft } from "lucide-react";
+import {
+  Package2,
+  SquareChartGantt,
+  ArrowRightLeft,
+  LogOut,
+} from "lucide-react";
 
 export default function AdminSidebar() {
   const menus = [
@@ -22,24 +27,34 @@ export default function AdminSidebar() {
   ];
 
   return (
-    <nav className="w-[28rem] bg-[#111] py-[1.8rem] text-[#fff]">
-      <div>
-        <div className="text-center">
-          <h1 className="text-[3.2rem] font-[700]">Beli.com</h1>
+    <nav className="w-[28rem] bg-[#111] text-[#fff] py-[2.4rem] px-[4rem]">
+      <div className="h-full flex flex-col justify-between">
+        <div>
+          <div>
+            <h1 className="text-[3.2rem] font-[700] px-[2.4rem]">Beli.com</h1>
+          </div>
+          <div>
+            <ul className="flex flex-col mt-[2.4rem] gap-[2.4rem]">
+              {menus.map((items, index) => (
+                <Link
+                  key={index}
+                  href={items.path}
+                  className="flex items-center gap-[1.2rem] border border-transparent text-[1.8rem] px-[2.4rem] py-[1.2rem] hover:border hover:border-[#fff]"
+                >
+                  {items.icon}
+                  {items.menu}
+                </Link>
+              ))}
+            </ul>
+          </div>
         </div>
-        <div className="mt-[2.4rem] flex justify-center">
-          <ul className="flex flex-col gap-[1.2rem]">
-            {menus.map((items, index) => (
-              <Link
-                key={index}
-                href={items.path}
-                className="flex items-center gap-[1.2rem] border border-transparent py-[1.4rem] px-[3.2rem] text-[1.8rem] hover:border hover:border-[#fff]"
-              >
-                {items.icon}
-                {items.menu}
-              </Link>
-            ))}
-          </ul>
+        <div>
+          <Link
+            href="/"
+            className="flex items-center gap-[1.2rem] border border-transparent text-[1.8rem] px-[2.4rem] py-[1.2rem] hover:border hover:border-[#fff]"
+          >
+            <LogOut /> Log out
+          </Link>
         </div>
       </div>
     </nav>

@@ -23,7 +23,9 @@ export default async function NavBar() {
   return (
     <header className="fixed top-0 w-full z-10">
       <div className="flex text-[1.4rem] bg-[#fff] justify-between py-[.4rem] px-[1.8rem]">
-        <h2>Created by Ridwandanu Maulana</h2>
+        <h2>
+          <Link href="/admin/signin">Created</Link> by Ridwandanu Maulana
+        </h2>
         <ul className="flex gap-[1.2rem]">
           {menus.map((item, index) => (
             <Link
