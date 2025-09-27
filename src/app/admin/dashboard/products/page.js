@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { Plus } from "lucide-react";
 
 export default function AdminProductsPage() {
   return (
     <div>
       <h1 className="text-[3.2rem] font-[700] mb-[1.8rem]">List of Products</h1>
-      <div className="flex gap-[2.4rem]">
-        <div className="relative overflow-x-auto">
+      <div className="flex">
+        <div className="relative">
           <table className="text-sm text-left rtl:text-right text-[#111] text-[1.4rem] border border-[#111] table-fixed shadow-lg">
             <thead className="text-xs text-[#fff] bg-[#111]">
               <tr className="text-[1.4rem]">
@@ -44,42 +45,9 @@ export default function AdminProductsPage() {
               </tr>
             </tbody>
           </table>
-        </div>
-        <div>
-          <form className="text-[1.4rem] border border-[#111] px-[2.4rem] py-[3.2rem] w-[40rem] shadow-lg">
-            <h2 className="font-[700] mb-[1.2rem] text-center">
-              Manage Products
-            </h2>
-            <div className="flex flex-col gap-[1.2rem]">
-              <div className="flex flex-col">
-                <label>Name</label>
-                <input
-                  type="text"
-                  className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-                  placeholder="Product Name"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label>Category</label>
-                <input
-                  type="text"
-                  className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-                  placeholder="Product Category"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label>Price</label>
-                <input
-                  type="text"
-                  className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-                  placeholder="Product Price"
-                />
-              </div>
-              <button className="bg-[#111] text-[#fff] py-[.8rem] hover:bg-[#000] cursor-pointer">
-                Submit
-              </button>
-            </div>
-          </form>
+          <button className="absolute top-0 right-[-4.8rem] bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]">
+            <Plus />
+          </button>
         </div>
       </div>
     </div>

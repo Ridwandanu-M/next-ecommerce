@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useDashboardData } from "../providers";
+import { Plus } from "lucide-react";
 
 export default function AdminCategoryPage() {
   const { category, loading } = useDashboardData();
@@ -11,7 +12,7 @@ export default function AdminCategoryPage() {
         Category of Products
       </h1>
       <div className="flex gap-[2.4rem]">
-        <div className="relative overflow-x-auto">
+        <div className="relative">
           <table className="text-sm text-left rtl:text-right text-[#111] text-[1.4rem] border border-[#111] table-fixed shadow-lg">
             <thead className="text-xs text-[#fff] bg-[#111]">
               <tr className="text-[1.4rem]">
@@ -44,6 +45,9 @@ export default function AdminCategoryPage() {
               ))}
             </tbody>
           </table>
+          <button className="absolute top-0 right-[-4.8rem] bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]">
+            <Plus />
+          </button>
         </div>
       </div>
     </div>
