@@ -21,3 +21,17 @@ export async function PATCH(req, { params }) {
     return new Response("Failed to update category", { status: 500 });
   }
 }
+
+export async function DELETE(req, { params }) {
+  const { id } = params;
+
+  try {
+    await prisma.category.delete({
+      where: { id: parseInt(id) },
+    });
+    return new Response(null, { status: 204 });
+  } catch (e) {
+    console.error(e);
+    return new Response("Failed to delete category", { status: 500 });
+  }
+}

@@ -59,13 +59,26 @@ export function DashboardProvider({ children }) {
     }
   }
 
+  async function deleteCategory(id) {
+    try {
+      const res = await fetch(`/api/category/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete category");
+
+      setCategory((prev) => prev.filter((items) => items.id !== id));
+    } catch (e) {
+      console.error("Error deleting category", e);
+    }
+  }
+
   useEffect(() => {
     getCategory();
   }, []);
 
   return (
     <DashboardContext.Provider
-      value={{ category, createCategory, editCategory }}
+      value={{ category, createCategory, editCategory, deleteCategory }}
     >
       {children}
     </DashboardContext.Provider>

@@ -4,10 +4,10 @@ import { useDashboardData } from "../providers";
 import { Plus } from "lucide-react";
 
 export default function AdminCategoryPage() {
-  const { category, createCategory, editCategory } = useDashboardData();
+  const { category, createCategory, editCategory, deleteCategory } =
+    useDashboardData();
   const [addCategory, setAddCategory] = useState("");
   const [showAddCategoryForm, setShowAddCategoryForm] = useState(false);
-  const [showEditCategoryForm, setShowEditCategoryForm] = useState(false);
   const [editId, setEditId] = useState(null);
   const [editCategoryName, setEditCategoryName] = useState("");
 
@@ -33,6 +33,12 @@ export default function AdminCategoryPage() {
     await editCategory(editId, editCategoryName);
     setEditId(null);
     setEditCategoryName("");
+  }
+
+  async function handleDeleteCategory(id) {
+    if (confirm("Delete this category?")) {
+      await deleteCategory(id);
+    }
   }
 
   return (
@@ -99,7 +105,10 @@ export default function AdminCategoryPage() {
                           Edit
                         </button>
                         <span> | </span>
-                        <button className="hover:underline cursor-pointer">
+                        <button
+                          onClick={() => handleDeleteCategory(items.id)}
+                          className="hover:underline cursor-pointer"
+                        >
                           Delete
                         </button>
                       </>
