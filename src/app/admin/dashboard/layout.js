@@ -1,10 +1,13 @@
 import AdminSidebar from "@/component/AdminSidebar";
+import { DashboardProvider } from "./providers";
 
 export default function AdminDashboardLayout({ children }) {
   return (
-    <section className="flex h-screen">
-      <AdminSidebar />
-      <main className="p-[3.2rem] w-full">{children}</main>
-    </section>
+    <DashboardProvider>
+      <section className="flex h-screen">
+        <AdminSidebar />
+        <main className="p-[3.2rem] w-full">{children}</main>
+      </section>
+    </DashboardProvider>
   );
 }
