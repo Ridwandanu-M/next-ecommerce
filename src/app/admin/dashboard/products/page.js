@@ -29,11 +29,42 @@ export default function AdminProductsPage() {
             </thead>
             <tbody>
               <tr className="bg-white border-b border-[#111]">
-                <td className="px-[2.4rem] py-[1.4rem]">1</td>
-                <td className="px-[2.4rem] py-[1.4rem]">Silver</td>
-                <td className="px-[2.4rem] py-[1.4rem]">Laptop</td>
-                <td className="px-[2.4rem] py-[1.4rem]">$2999</td>
-                <td className="px-[2.4rem] py-[1.4rem]">
+                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  1
+                </td>
+                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  Silver
+                </td>
+                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  Laptop
+                </td>
+                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  $2999
+                </td>
+                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <button className="hover:underline cursor-pointer">
+                    Edit
+                  </button>
+                  <span> | </span>
+                  <button className="hover:underline cursor-pointer">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+              <tr className="bg-white border-b border-[#111]">
+                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  2
+                </td>
+                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  Silver
+                </td>
+                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  Laptop
+                </td>
+                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  $2999
+                </td>
+                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
                   <button className="hover:underline cursor-pointer">
                     Edit
                   </button>

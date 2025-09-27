@@ -10,7 +10,7 @@ export async function GET() {
   return Response.json(category);
 }
 
-export async function POST() {
+export async function POST(req) {
   const { name } = await req.json();
 
   if (!name || name.trim() === "") {
