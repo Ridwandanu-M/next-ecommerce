@@ -1,0 +1,24 @@
+import { supabase } from "./supabaseClient";
+
+export async function uploadImageFile(file) {
+  const ext = file.name.split(".").pop();
+  const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const filePath = `product/${fileName}`;
+
+  const { error } = await supabase.storage
+    .from("product-images")
+    .upload(filePath, file, { cacheControl: "3600", upsert: false });
+
+  if (error) throw error;
+
+  const { data } = supabase.storage
+    .from("product-images")
+    .getPublicUrl(filePath);
+  return data.publicUrl;
+}
+
+async function uploadAllFiles(fileList) {
+  const files = Array.from(fileList);
+  const urls = await Promise.all(files.map((file) => uploadImageFile(file)));
+  return urls;
+}
