@@ -43,9 +43,15 @@ export default function AdminCategoryPage() {
 
   return (
     <div>
-      <h1 className="text-[3.2rem] font-[700] mb-[1.8rem]">
-        Category of Products
-      </h1>
+      <div className="flex items-center gap-[1.8rem] mb-[1.8rem]">
+        <h1 className="text-[3.2rem] font-[700]">Category of Products</h1>
+        <button
+          onClick={() => showAddCategory()}
+          className="bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]"
+        >
+          <Plus />
+        </button>
+      </div>
       <div className="flex gap-[2.4rem]">
         <div className="relative">
           <table className="text-sm text-left rtl:text-right text-[#111] text-[1.4rem] border border-[#111] table-fixed shadow-lg">
@@ -118,12 +124,7 @@ export default function AdminCategoryPage() {
               ))}
             </tbody>
           </table>
-          <button
-            onClick={() => showAddCategory()}
-            className="absolute top-0 right-[-4.8rem] bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]"
-          >
-            <Plus />
-          </button>
+
           {showAddCategoryForm && (
             <form onSubmit={handleAddCategory}>
               <div className="absolute top-0 right-[-36rem] flex shadow-lg">
