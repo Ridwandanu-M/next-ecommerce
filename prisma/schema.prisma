@@ -16,6 +16,7 @@ enum RoleUser {
 enum ProductStock {
   ready
   preorder
+  outofstock
 }
 
 model User {
@@ -30,15 +31,6 @@ model User {
   Order      Order[]
 }
 
-model Location {
-  id      Int       @unique @default(autoincrement())
-  name    String    @db.VarChar(255)
-  Product Product[]
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
 model Product {
   id           Int            @id @default(autoincrement())
   name         String         @db.VarChar(255)
@@ -46,8 +38,6 @@ model Product {
   price        BigInt         @db.BigInt
   categoryId   Int
   category     Category       @relation(fields: [categoryId], references: [id])
-  locationId   Int
-  location     Location       @relation(fields: [locationId], references: [id])
   stock        ProductStock
   images       String[]
   OrderProduct OrderProduct[]
