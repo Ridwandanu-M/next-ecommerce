@@ -5,6 +5,7 @@ export const DashboardContext = createContext();
 
 export function DashboardProvider({ children }) {
   const [category, setCategory] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   async function getCategory() {
@@ -72,13 +73,84 @@ export function DashboardProvider({ children }) {
     }
   }
 
+  async function getProduct() {
+    try {
+      const res = await fetch("/api/products");
+      if (!res.ok) return new Error("Failed to fetch products");
+      const data = await res.json();
+      setProducts(
+        data.map((item) => ({ ...item, price: item.price?.toString() })),
+      );
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function createProduct(payload) {
+    try {
+      const res = await fetch("/api/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Failed to create product");
+      const created = await res.json();
+      setProducts((prev) => [...prev, created]);
+      return created;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+
+  async function updateProduct(id, payload) {
+    try {
+      const res = await fetch(`/api/products/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Failed to update");
+      const updated = await res.json();
+      setProducts((prev) =>
+        prev.map((item) => (item.id === updated.id ? updated : item)),
+      );
+      return updated;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+
+  async function deleteProduct(id, payload) {
+    try {
+      const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete product");
+      setProducts((prev) => prev.filter((item) => item.id !== Number(id)));
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+
   useEffect(() => {
     getCategory();
   }, []);
 
   return (
     <DashboardContext.Provider
-      value={{ category, createCategory, editCategory, deleteCategory }}
+      value={{
+        category,
+        createCategory,
+        editCategory,
+        deleteCategory,
+        getProduct,
+        createProduct,
+        updateProduct,
+        deleteProduct,
+      }}
     >
       {children}
     </DashboardContext.Provider>
