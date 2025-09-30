@@ -113,7 +113,7 @@ export default function AdminProductsPage() {
             </thead>
             <tbody>
               {products.map((item, index) => (
-                <tr key={item.id} className="bg-white border-b border-[#111]">
+                <tr key={item.id} className="bg-white border-b border-[#111] ">
                   <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
                     {index + 1}
                   </td>
@@ -127,7 +127,6 @@ export default function AdminProductsPage() {
                     {item.category?.name ?? "-"}
                   </td>
                   <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                    Rp.{" "}
                     {new Intl.NumberFormat("id-ID", {
                       style: "currency",
                       currency: "IDR",
@@ -141,8 +140,8 @@ export default function AdminProductsPage() {
                     <Image
                       alt="product image"
                       src={item.images?.[0] ?? ""}
-                      width="100"
-                      height="0"
+                      width="75"
+                      height="75"
                       unoptimized
                     />
                   </td>
