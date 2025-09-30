@@ -2,9 +2,48 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { useDashboardData } from "../providers";
+import { useState } from "react";
+import { uploadImageFile } from "@/lib/upload";
 
 export default function AdminProductsPage() {
-  const { category } = useDashboardData();
+  const { category, createProduct } = useDashboardData();
+  const [prodName, setProdName] = useState("");
+  const [prodDesc, setProdDesc] = useState("");
+  const [prodCategory, setProdCategory] = useState("");
+  const [prodPrice, setProdPrice] = useState("");
+  const [prodStock, setProdStock] = useState(1);
+  const [prodImage, setProdImage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      let imageUrls = [];
+      if (prodImage && prodImage.length) {
+        imageUrls = await Promise.all(
+          Array.from(prodImage).map(uploadImageFile),
+        );
+      }
+
+      const payload = {
+        prodName,
+        prodDesc,
+        prodCategory,
+        prodPrice: String(prodPrice),
+        prodStock,
+        prodImage: imageUrls,
+      };
+
+      await createProduct(payload);
+      alert("Product created");
+    } catch (e) {
+      console.error(e);
+      alert("Failed to create product");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div>
@@ -83,7 +122,10 @@ export default function AdminProductsPage() {
         </div>
       </div>
       <div className="fixed inset-0 z-20 flex justify-center items-center backdrop-blur-xs">
-        <form className="text-[1.4rem] flex flex-col justify-center w-[48rem] border border-[#111] py-[5.6rem] px-[4rem] bg-[#fff]">
+        <form
+          onSubmit={handleSubmit}
+          className="text-[1.4rem] flex flex-col justify-center w-[48rem] border border-[#111] py-[5.6rem] px-[4rem] bg-[#fff]"
+        >
           <h2 className="text-[3.2rem] font-[700] text-center mb-[1.8rem]">
             Add Product
           </h2>
@@ -91,6 +133,8 @@ export default function AdminProductsPage() {
             <label className="font-[700]">Name</label>
             <input
               type="text"
+              value={prodName}
+              onChange={(e) => setProdName(e.target.value)}
               placeholder="Product name"
               className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
             />
@@ -99,12 +143,18 @@ export default function AdminProductsPage() {
             <label className="font-[700]">Description</label>
             <textarea
               placeholder="Product description"
+              value={prodDesc}
+              onChange={(e) => setProdDesc(e.target.value)}
               className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
             ></textarea>
           </div>
           <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
             <label className="font-[700]">Category</label>
-            <select className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none">
+            <select
+              value={prodCategory}
+              onChange={(e) => setProdCategory(e.target.value)}
+              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none"
+            >
               <option disabled>Select Category</option>
               {category.map((items, index) => (
                 <option key={index} value={items.id}>
@@ -117,13 +167,19 @@ export default function AdminProductsPage() {
             <label className="font-[700]">Price</label>
             <input
               type="number"
-              placeholder="Rp. 1.000.000"
+              value={prodPrice}
+              onChange={(e) => setProdPrice(e.target.value)}
+              placeholder="Product price"
               className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
             />
           </div>
           <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
             <label className="font-[700]">Stock</label>
-            <select className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none">
+            <select
+              value={prodStock}
+              onChange={(e) => setProdStock(e.target.value)}
+              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none"
+            >
               <option disabled>Select Stock</option>
               <option value="1">Ready</option>
               <option value="2">Pre Order</option>
@@ -133,10 +189,16 @@ export default function AdminProductsPage() {
             <label className="font-[700]">Image</label>
             <input
               type="file"
+              value={prodImage}
+              multiple
+              onChange={(e) => setProdImage(e.target.files[0])}
               className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
             />
           </div>
-          <button className="font-[600] text-[#fff] bg-[#111] hover:bg-[#000] py-[.8rem] mt-[1.2rem] cursor-pointer">
+          <button
+            type="submit"
+            className="font-[600] text-[#fff] bg-[#111] hover:bg-[#000] py-[.8rem] mt-[1.2rem] cursor-pointer"
+          >
             Add Product
           </button>
         </form>
