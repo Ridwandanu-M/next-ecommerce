@@ -1,42 +1,56 @@
 "use client";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { useDashboardData } from "../providers";
 import { useState } from "react";
 import { uploadImageFile } from "@/lib/upload";
+import Image from "next/image";
 
 export default function AdminProductsPage() {
-  const { category, createProduct } = useDashboardData();
+  const { category, createProduct, products } = useDashboardData();
   const [prodName, setProdName] = useState("");
   const [prodDesc, setProdDesc] = useState("");
   const [prodCategory, setProdCategory] = useState("");
   const [prodPrice, setProdPrice] = useState("");
-  const [prodStock, setProdStock] = useState(1);
-  const [prodImage, setProdImage] = useState("");
+  const [prodStock, setProdStock] = useState("ready");
+  const [prodImage, setProdImage] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [showForm, setShowForm] = useState(false);
+
+  function showProductForm() {
+    setShowForm((prev) => !prev);
+  }
+
+  function formatDesc(desc) {
+    if (desc.length <= 40) {
+      return desc;
+    } else {
+      return `${desc.slice(0, 40)}...`;
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     try {
       let imageUrls = [];
-      if (prodImage && prodImage.length) {
-        imageUrls = await Promise.all(
-          Array.from(prodImage).map(uploadImageFile),
-        );
+      if (prodImage && prodImage.length > 0) {
+        imageUrls = await Promise.all(prodImage.map(uploadImageFile));
       }
 
       const payload = {
-        prodName,
-        prodDesc,
-        prodCategory,
-        prodPrice: String(prodPrice),
-        prodStock,
-        prodImage: imageUrls,
+        name: prodName,
+        desc: prodDesc,
+        categoryId: prodCategory,
+        price: String(prodPrice),
+        stock: prodStock,
+        images: imageUrls,
       };
 
       await createProduct(payload);
       alert("Product created");
+      showProductForm();
     } catch (e) {
       console.error(e);
       alert("Failed to create product");
@@ -49,7 +63,11 @@ export default function AdminProductsPage() {
     <div>
       <div className="flex items-center gap-[1.8rem] mb-[1.8rem]">
         <h1 className="text-[3.2rem] font-[700]">List of Products</h1>
-        <button className="bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]">
+        <button
+          type="button"
+          onClick={() => showProductForm()}
+          className="bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]"
+        >
           <Plus />
         </button>
       </div>
@@ -85,124 +103,145 @@ export default function AdminProductsPage() {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b border-[#111]">
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  1
-                </td>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  Gaming Keyboard
-                </td>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  Description about this product....
-                </td>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  Keyboard
-                </td>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  Rp. 1.200.000
-                </td>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  Pre Order
-                </td>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  Images.Url
-                </td>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  <button className="hover:underline cursor-pointer">
-                    Edit
-                  </button>
-                  <span> | </span>
-                  <button className="hover:underline cursor-pointer">
-                    Delete
-                  </button>
-                </td>
-              </tr>
+              {products.map((item, index) => (
+                <tr key={item.id} className="bg-white border-b border-[#111]">
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    {index + 1}
+                  </td>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    {item.name}
+                  </td>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    {formatDesc(item.desc)}
+                  </td>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    {item.category?.name ?? "-"}
+                  </td>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    Rp.{" "}
+                    {new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                      minimumFractionDigits: 0,
+                    }).format(item.price)}
+                  </td>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    {item.stock}
+                  </td>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    <Image
+                      alt="product image"
+                      src={item.images?.[0] ?? ""}
+                      width="100"
+                      height="0"
+                      unoptimized
+                    />
+                  </td>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    <button className="hover:underline cursor-pointer">
+                      Edit
+                    </button>
+                    <span> | </span>
+                    <button className="hover:underline cursor-pointer">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
-      <div className="fixed inset-0 z-20 flex justify-center items-center backdrop-blur-xs">
-        <form
-          onSubmit={handleSubmit}
-          className="text-[1.4rem] flex flex-col justify-center w-[48rem] border border-[#111] py-[5.6rem] px-[4rem] bg-[#fff]"
-        >
-          <h2 className="text-[3.2rem] font-[700] text-center mb-[1.8rem]">
-            Add Product
-          </h2>
-          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-            <label className="font-[700]">Name</label>
-            <input
-              type="text"
-              value={prodName}
-              onChange={(e) => setProdName(e.target.value)}
-              placeholder="Product name"
-              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-            />
-          </div>
-          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-            <label className="font-[700]">Description</label>
-            <textarea
-              placeholder="Product description"
-              value={prodDesc}
-              onChange={(e) => setProdDesc(e.target.value)}
-              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-            ></textarea>
-          </div>
-          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-            <label className="font-[700]">Category</label>
-            <select
-              value={prodCategory}
-              onChange={(e) => setProdCategory(e.target.value)}
-              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none"
-            >
-              <option disabled>Select Category</option>
-              {category.map((items, index) => (
-                <option key={index} value={items.id}>
-                  {items.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-            <label className="font-[700]">Price</label>
-            <input
-              type="number"
-              value={prodPrice}
-              onChange={(e) => setProdPrice(e.target.value)}
-              placeholder="Product price"
-              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-            />
-          </div>
-          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-            <label className="font-[700]">Stock</label>
-            <select
-              value={prodStock}
-              onChange={(e) => setProdStock(e.target.value)}
-              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none"
-            >
-              <option disabled>Select Stock</option>
-              <option value="1">Ready</option>
-              <option value="2">Pre Order</option>
-            </select>
-          </div>
-          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-            <label className="font-[700]">Image</label>
-            <input
-              type="file"
-              value={prodImage}
-              multiple
-              onChange={(e) => setProdImage(e.target.files[0])}
-              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-            />
-          </div>
-          <button
-            type="submit"
-            className="font-[600] text-[#fff] bg-[#111] hover:bg-[#000] py-[.8rem] mt-[1.2rem] cursor-pointer"
+      {showForm && (
+        <div className="fixed inset-0 z-20 flex justify-center items-center backdrop-blur-xs">
+          <form
+            onSubmit={handleSubmit}
+            className="relative text-[1.4rem] flex flex-col justify-center w-[48rem] border border-[#111] py-[5.6rem] px-[4rem] bg-[#fff]"
           >
-            Add Product
-          </button>
-        </form>
-      </div>
+            <h2 className="text-[3.2rem] font-[700] text-center mb-[1.8rem]">
+              Add Product
+            </h2>
+            <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
+              <label className="font-[700]">Name</label>
+              <input
+                type="text"
+                value={prodName}
+                onChange={(e) => setProdName(e.target.value)}
+                placeholder="Product name"
+                className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
+              />
+            </div>
+            <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
+              <label className="font-[700]">Description</label>
+              <textarea
+                placeholder="Product description"
+                value={prodDesc}
+                onChange={(e) => setProdDesc(e.target.value)}
+                className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
+              ></textarea>
+            </div>
+            <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
+              <label className="font-[700]">Category</label>
+              <select
+                value={prodCategory}
+                onChange={(e) => setProdCategory(e.target.value)}
+                className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none"
+              >
+                <option disabled>Select Category</option>
+                {category.map((items, index) => (
+                  <option key={index} value={items.id}>
+                    {items.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
+              <label className="font-[700]">Price</label>
+              <input
+                type="number"
+                value={prodPrice}
+                onChange={(e) => setProdPrice(e.target.value)}
+                placeholder="Product price"
+                className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
+              />
+            </div>
+            <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
+              <label className="font-[700]">Stock</label>
+              <select
+                value={prodStock}
+                onChange={(e) => setProdStock(e.target.value)}
+                className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none"
+              >
+                <option disabled>Select Stock</option>
+                <option value="ready">Ready</option>
+                <option value="preorder">Pre Order</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
+              <label className="font-[700]">Image</label>
+              <input
+                type="file"
+                multiple
+                onChange={(e) => setProdImage(Array.from(e.target.files))}
+                className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
+              />
+            </div>
+            <button
+              type="submit"
+              className="font-[600] text-[#fff] bg-[#111] hover:bg-[#000] py-[.8rem] mt-[1.2rem] cursor-pointer"
+            >
+              Add Product
+            </button>
+            <button
+              type="button"
+              onClick={() => showProductForm()}
+              className="cursor-pointer"
+            >
+              <X className="absolute top-[1.8rem] right-[1.8rem]" />
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

@@ -137,6 +137,7 @@ export function DashboardProvider({ children }) {
 
   useEffect(() => {
     getCategory();
+    getProduct();
   }, []);
 
   return (
@@ -146,6 +147,7 @@ export function DashboardProvider({ children }) {
         createCategory,
         editCategory,
         deleteCategory,
+        products,
         getProduct,
         createProduct,
         updateProduct,

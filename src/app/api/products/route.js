@@ -9,6 +9,9 @@ function serializeProduct(product) {
 export async function GET() {
   const products = await prisma.product.findMany({
     orderBy: { created_at: "desc" },
+    include: {
+      category: true,
+    },
   });
 
   return new Response(JSON.stringify(products.map(serializeProduct)), {
