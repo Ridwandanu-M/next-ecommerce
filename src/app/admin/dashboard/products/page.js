@@ -8,7 +8,7 @@ import Image from "next/image";
 import AddProductForm from "@/component/AddProductForm";
 
 export default function AdminProductsPage() {
-  const { category, createProduct, deleteProduct, products } =
+  const { category, createProduct, updateProduct, deleteProduct, products } =
     useDashboardData();
   const [prodName, setProdName] = useState("");
   const [prodDesc, setProdDesc] = useState("");
@@ -18,7 +18,6 @@ export default function AdminProductsPage() {
   const [prodImage, setProdImage] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editId, setEditId] = useState(null);
-
   const [showForm, setShowForm] = useState(false);
 
   function showProductForm() {
@@ -29,7 +28,7 @@ export default function AdminProductsPage() {
     setEditId(item.id);
     setProdName(item.name);
     setProdDesc(item.desc);
-    setProdCategory(item.category.name);
+    setProdCategory(item.category?.name);
     setProdPrice(item.price);
     setProdStock(item.stock);
     setProdImage(item.image);
@@ -82,6 +81,38 @@ export default function AdminProductsPage() {
 
   async function handleEditProduct(e) {
     e.preventDefault();
+    setLoading(true);
+    try {
+      let imageUrls = [];
+      if (prodImage && prodImage.length > 0) {
+        imageUrls = await Promise.all(prodImage.map(uploadImageFile));
+      }
+
+      const payload = {
+        name: prodName,
+        desc: prodDesc,
+        categoryId: prodCategory,
+        price: String(prodPrice),
+        stock: prodStock,
+        images: imageUrls.length > 0 ? imageUrls : undefined,
+      };
+
+      await updateProduct(editId, payload);
+      alert("Product updated");
+
+      setEditId(null);
+      setProdName("");
+      setProdDesc("");
+      setProdCategory(1);
+      setProdPrice("");
+      setProdStock("ready");
+      setProdImage([]);
+    } catch (e) {
+      console.error(e);
+      alert("Failed to update product");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function handleDeleteProduct(id) {
@@ -174,7 +205,7 @@ export default function AdminProductsPage() {
                         className="relative text-[1.4rem] flex flex-col justify-center w-[48rem] border border-[#111] py-[5.6rem] px-[4rem] bg-[#fff]"
                       >
                         <h2 className="text-[3.2rem] font-[700] text-center mb-[1.8rem]">
-                          Add Product
+                          Edit Product
                         </h2>
                         <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
                           <label className="font-[700]">Name</label>
@@ -247,11 +278,11 @@ export default function AdminProductsPage() {
                           type="submit"
                           className="font-[600] text-[#fff] bg-[#111] hover:bg-[#000] py-[.8rem] mt-[1.2rem] cursor-pointer"
                         >
-                          Add Product
+                          Edit Product
                         </button>
                         <button
                           type="button"
-                          onClick={() => showProductForm()}
+                          onClick={() => setEditId(null)}
                           className="cursor-pointer"
                         >
                           <X className="absolute top-[1.8rem] right-[1.8rem]" />

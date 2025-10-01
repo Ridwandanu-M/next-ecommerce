@@ -22,16 +22,19 @@ export async function PATCH(req, { params }) {
   try {
     const body = await req.json();
     const updateData = {};
-    if (body.name) updateData.name = body.name;
-    if (body.desc) updateData.desc = body.desc;
-    if (body.price) updateData.price = BigInt(body.price);
-    if (body.categoryId) updateData.categoryId = Number(body.categoryId);
-    if (body.stock) updateData.stock = body.stock;
-    if (Array.isArray(body.images)) updateData.body = body.images;
+
+    if (body.name !== undefined) updateData.name = body.name;
+    if (body.desc !== undefined) updateData.desc = body.desc;
+    if (body.price !== undefined) updateData.price = BigInt(body.price);
+    if (body.categoryId !== undefined)
+      updateData.categoryId = Number(body.categoryId);
+    if (body.stock !== undefined) updateData.stock = body.stock;
+    if (Array.isArray(body.images)) updateData.images = body.images;
 
     const updated = await prisma.product.update({
       where: { id: Number(id) },
       data: updateData,
+      include: { category: true },
     });
 
     return new Response(
