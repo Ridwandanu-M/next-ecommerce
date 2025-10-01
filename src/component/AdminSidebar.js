@@ -5,10 +5,16 @@ import {
   SquareChartGantt,
   ArrowRightLeft,
   LogOut,
+  UsersRound,
 } from "lucide-react";
 
 export default function AdminSidebar() {
   const menus = [
+    {
+      menu: "Users",
+      path: "/admin/dashboard/users",
+      icon: <UsersRound />,
+    },
     {
       menu: "Products",
       path: "/admin/dashboard/products",

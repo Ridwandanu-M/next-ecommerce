@@ -6,6 +6,7 @@ export const DashboardContext = createContext();
 export function DashboardProvider({ children }) {
   const [category, setCategory] = useState([]);
   const [products, setProducts] = useState([]);
+  const [user, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   async function getCategory() {
@@ -132,6 +133,15 @@ export function DashboardProvider({ children }) {
     } catch (e) {
       console.error(e);
       throw e;
+    }
+  }
+
+  async function getUser() {
+    try {
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
     }
   }
 
