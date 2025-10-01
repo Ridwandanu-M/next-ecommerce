@@ -36,7 +36,7 @@ export async function PATCH(req, { params }) {
 
     return new Response(
       JSON.stringify({ ...updated, price: updated.price.toString() }),
-      { headers: { "Content-Type": "application/json" } },
+      { headers: { "Content-Type": "application/json" } }
     );
   } catch (e) {
     console.error(e);
@@ -55,10 +55,15 @@ export async function DELETE(req, { params }) {
     if (product.images && product.images.length) {
       const paths = product.images.map(urlToBucketPath).filter(Boolean);
       if (paths.length) {
-        const { error } = await supabaseAdmin.storage
+        const { data, error } = await supabaseAdmin.storage
           .from("product-images")
           .remove(paths);
-        if (error) console.error("Failed to remove files: ", error);
+
+        if (error) {
+          console.error("Delete error:", error);
+        } else {
+          console.log("Deleted files:", data);
+        }
       }
     }
 
