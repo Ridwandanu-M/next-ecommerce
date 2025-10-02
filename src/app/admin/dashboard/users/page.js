@@ -2,7 +2,7 @@
 import { useDashboardData } from "../providers";
 
 export default function AdminUsersPage() {
-  const { user } = useDashboardData();
+  const { user, loading } = useDashboardData();
   return (
     <div>
       <div className="mb-[1.8rem]">
@@ -26,29 +26,37 @@ export default function AdminUsersPage() {
               </th>
             </tr>
           </thead>
-          <tbody className="relative">
-            {user.map((items, index) => (
-              <tr key={items.id}>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  {index + 1}
-                </td>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  {items.name}
-                </td>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  {items.email}
-                </td>
-                <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                  <button className="hover:underline cursor-pointer">
-                    Edit
-                  </button>
-                  <span> | </span>
-                  <button className="hover:underline cursor-pointer">
-                    Delete
-                  </button>
+          <tbody>
+            {loading ? (
+              <tr className="w-full">
+                <td colSpan="4" className="px-[40%] py-[3.2rem]">
+                  Loading user data
                 </td>
               </tr>
-            ))}
+            ) : (
+              user.map((items, index) => (
+                <tr key={items.id}>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    {index + 1}
+                  </td>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    {items.name}
+                  </td>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    {items.email}
+                  </td>
+                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                    <button className="hover:underline cursor-pointer">
+                      Edit
+                    </button>
+                    <span> | </span>
+                    <button className="hover:underline cursor-pointer">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

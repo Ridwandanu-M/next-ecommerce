@@ -54,7 +54,7 @@ export function DashboardProvider({ children }) {
       const update = await res.json();
 
       setCategory((prev) =>
-        prev.map((item) => (item.id === id ? update : item))
+        prev.map((item) => (item.id === id ? update : item)),
       );
     } catch (e) {
       console.error("Error updating category", e);
@@ -80,7 +80,7 @@ export function DashboardProvider({ children }) {
       if (!res.ok) return new Error("Failed to fetch products");
       const data = await res.json();
       setProducts(
-        data.map((item) => ({ ...item, price: item.price?.toString() }))
+        data.map((item) => ({ ...item, price: item.price?.toString() })),
       );
     } catch (e) {
       console.error(e);
@@ -116,7 +116,7 @@ export function DashboardProvider({ children }) {
       if (!res.ok) throw new Error("Failed to update");
       const updated = await res.json();
       setProducts((prev) =>
-        prev.map((item) => (item.id === updated.id ? updated : item))
+        prev.map((item) => (item.id === updated.id ? updated : item)),
       );
       return updated;
     } catch (e) {
@@ -137,6 +137,7 @@ export function DashboardProvider({ children }) {
   }
 
   async function getUser() {
+    setLoading(true);
     try {
       const res = await fetch("/api/users");
       if (!res.ok) throw new Error("Failed to fetch users");
@@ -168,6 +169,8 @@ export function DashboardProvider({ children }) {
         updateProduct,
         deleteProduct,
         user,
+        setLoading,
+        loading,
       }}
     >
       {children}
