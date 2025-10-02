@@ -31,7 +31,7 @@ export default function Sidebar() {
     <div className="w-[28rem] border-r border-r-black/40 p-[3.2rem] flex flex-col justify-between">
       <div>
         <div className="flex flex-col items-center">
-          <CircleUserRound size={144} />
+          <CircleUserRound size={120} />
           <h2 className="text-[2rem]">{session?.user?.name ?? "Loading"}</h2>
         </div>
         <div className="flex flex-col items-center">

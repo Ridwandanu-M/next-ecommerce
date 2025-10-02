@@ -10,9 +10,9 @@ export default function ProductSection({ products }) {
     }
   }
   return (
-    <section className="mt-24">
+    <section className="mt-[9.6rem]">
       <h2 className="text-[3.2rem] mb-[1.8rem] text-center">Products</h2>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 p-[1.6rem]">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {products.map((item) => (
           <Link
             key={item.id}
