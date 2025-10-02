@@ -21,7 +21,7 @@ export default async function NavBar() {
   ];
 
   return (
-    <header className="fixed top-0 w-full z-10">
+    <header className="fixed top-0 w-full z-50">
       <div className="flex text-[1.4rem] bg-[#fff] justify-between py-[.4rem] px-[1.8rem]">
         <h2>
           <Link href="/admin/signin">Created</Link> by Ridwandanu Maulana
@@ -38,7 +38,7 @@ export default async function NavBar() {
           ))}
         </ul>
       </div>
-      <div className="flex bg-[#fff] items-center gap-[8rem] border-y border-y-black/40 py-[.4rem] px-[1.8rem]">
+      <div className="flex bg-[#fff] items-center gap-[8rem] border-y border-y-black/40 py-[.4rem] px-[1.8rem] z-50">
         <Link href="/" className="text-[3.2rem] font-[700]">
           Beli.com
         </Link>

@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useDashboardData } from "../providers";
+import { DataProvider, useData } from "@/app/providers";
 import { Plus } from "lucide-react";
 
 export default function AdminCategoryPage() {
   const { category, createCategory, editCategory, deleteCategory, loading } =
-    useDashboardData();
+    useData();
   const [addCategory, setAddCategory] = useState("");
   const [showAddCategoryForm, setShowAddCategoryForm] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -43,14 +43,32 @@ export default function AdminCategoryPage() {
 
   return (
     <div>
-      <div className="flex items-center gap-[1.8rem] mb-[1.8rem]">
-        <h1 className="text-[3.2rem] font-[700]">Category of Products</h1>
-        <button
-          onClick={() => showAddCategory()}
-          className="bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]"
-        >
-          <Plus />
-        </button>
+      <div className="flex mb-[1.8rem] justify-between">
+        <div className="flex items-center gap-[1.8rem]">
+          <h1 className="text-[3.2rem] font-[700]">Category of Products</h1>
+          <button
+            onClick={() => showAddCategory()}
+            className="bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]"
+          >
+            <Plus />
+          </button>
+        </div>
+        {showAddCategoryForm && (
+          <form onSubmit={handleAddCategory}>
+            <div className="flex shadow-lg">
+              <input
+                type="text"
+                value={addCategory}
+                onChange={(e) => setAddCategory(e.target.value)}
+                placeholder="Add Category"
+                className="border border-black/40 py-[1.25rem] px-[1.4rem] focus:outline-none focus:border focus:border-[#111] text-[1.4rem]"
+              />
+              <button className="bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]">
+                <Plus />
+              </button>
+            </div>
+          </form>
+        )}
       </div>
       <div className="relative">
         <table className="w-full text-sm text-left rtl:text-right text-[#111] text-[1.4rem] border border-[#111] table-fixed shadow-lg">
@@ -131,23 +149,6 @@ export default function AdminCategoryPage() {
             )}
           </tbody>
         </table>
-
-        {showAddCategoryForm && (
-          <form onSubmit={handleAddCategory}>
-            <div className="absolute top-0 right-[-36rem] flex shadow-lg">
-              <input
-                type="text"
-                value={addCategory}
-                onChange={(e) => setAddCategory(e.target.value)}
-                placeholder="Add Category"
-                className="border border-black/40 py-[1.25rem] px-[1.4rem] focus:outline-none focus:border focus:border-[#111] text-[1.4rem]"
-              />
-              <button className="bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]">
-                <Plus />
-              </button>
-            </div>
-          </form>
-        )}
       </div>
     </div>
   );

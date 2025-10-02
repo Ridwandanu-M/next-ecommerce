@@ -1,8 +1,8 @@
 "use client";
-import { useDashboardData } from "../providers";
+import { useData } from "@/app/providers";
 
 export default function AdminUsersPage() {
-  const { user, loading } = useDashboardData();
+  const { user, loading } = useData();
   return (
     <div>
       <div className="mb-[1.8rem]">

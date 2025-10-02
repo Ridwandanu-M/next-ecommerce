@@ -48,7 +48,7 @@ export default function AddProductForm({
           <label className="font-[700]">Category</label>
           <select
             value={prodCategory}
-            onChange={(e) => setProdCategory(e.target.value)}
+            onChange={(e) => setProdCategory(Number(e.target.value))}
             className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none"
           >
             <option disabled>Select Category</option>

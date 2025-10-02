@@ -28,6 +28,13 @@ export async function POST(req) {
       return new Response("Missing fields", { status: 400 });
     }
 
+    const categoryExists = await prisma.category.findUnique({
+      where: { id: Number(categoryId) },
+    });
+    if (!categoryExists) {
+      return new Response("Invalid category", { status: 400 });
+    }
+
     const product = await prisma.product.create({
       data: {
         name,

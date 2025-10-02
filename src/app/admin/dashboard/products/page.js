@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Plus, X } from "lucide-react";
-import { useDashboardData } from "../providers";
+import { useData } from "@/app/providers";
 import { useState } from "react";
 import { uploadImageFile } from "@/lib/upload";
 import Image from "next/image";
@@ -15,7 +15,7 @@ export default function AdminProductsPage() {
     deleteProduct,
     products,
     loading,
-  } = useDashboardData();
+  } = useData();
   const [prodName, setProdName] = useState("");
   const [prodDesc, setProdDesc] = useState("");
   const [prodCategory, setProdCategory] = useState(1);
@@ -40,7 +40,7 @@ export default function AdminProductsPage() {
     setProdImage(item.image);
   }
 
-  function formatDesc(desc) {
+  function formatText(desc) {
     if (desc.length <= 40) {
       return desc;
     } else {
@@ -183,10 +183,10 @@ export default function AdminProductsPage() {
                     {index + 1}
                   </td>
                   <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                    {item.name}
+                    {formatText(item.name)}
                   </td>
                   <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
-                    {formatDesc(item.desc)}
+                    {formatText(item.desc)}
                   </td>
                   <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
                     {item.category?.name ?? "-"}

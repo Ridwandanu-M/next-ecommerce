@@ -1,9 +1,9 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 
-export const DashboardContext = createContext();
+export const DataContext = createContext();
 
-export function DashboardProvider({ children }) {
+export function DataProvider({ children }) {
   const [category, setCategory] = useState([]);
   const [products, setProducts] = useState([]);
   const [user, setUsers] = useState([]);
@@ -157,7 +157,7 @@ export function DashboardProvider({ children }) {
   }, []);
 
   return (
-    <DashboardContext.Provider
+    <DataContext.Provider
       value={{
         category,
         createCategory,
@@ -174,10 +174,10 @@ export function DashboardProvider({ children }) {
       }}
     >
       {children}
-    </DashboardContext.Provider>
+    </DataContext.Provider>
   );
 }
 
-export function useDashboardData() {
-  return useContext(DashboardContext);
+export function useData() {
+  return useContext(DataContext);
 }

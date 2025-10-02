@@ -12,9 +12,7 @@ export default function HomeLayout({ children }) {
   return (
     <section>
       <NavBar />
-      <main className="mt-[9.6rem]">{children}</main>
+      <main className="mt-[14.4rem] max-w-[144rem] mx-auto">{children}</main>
     </section>
   );
 }
-
-// className="py-[.4rem] px-[1.8rem]"
