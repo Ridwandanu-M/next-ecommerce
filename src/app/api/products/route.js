@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import slugify from "slugify";
 
 const prisma = new PrismaClient();
 
@@ -38,6 +39,7 @@ export async function POST(req) {
     const product = await prisma.product.create({
       data: {
         name,
+        slug: slugify(name, { lower: true, strict: true }),
         desc: desc || "",
         price: BigInt(price),
         categoryId: Number(categoryId),

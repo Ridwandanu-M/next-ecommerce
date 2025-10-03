@@ -16,7 +16,7 @@ export default function ProductSection({ products }) {
         {products.map((item) => (
           <Link
             key={item.id}
-            href={`/products/${item.id}`}
+            href={`/products/${item.slug}`}
             className="flex flex-col border border-black/40 shadow-md p-[1.8rem]"
           >
             <div className="relative w-64 h-64 mb-[1.2rem] mx-auto">
