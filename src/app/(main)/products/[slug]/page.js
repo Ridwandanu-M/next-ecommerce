@@ -16,20 +16,25 @@ export default async function ProductPage({ params }) {
 
   return (
     <section>
-      <div className="grid grid-cols-3 gap-[4.8rem]">
-        <div className="relative mb-[1.2rem]">
+      <div className="grid grid-cols-3 gap-[4.8rem] items-start">
+        <div className="relative aspect-square w-full max-w-[48rem] mb-[1.2rem]">
           <Image
             src={product.images?.[0] ?? "/placeholder-image.png"}
             alt={product.name}
-            layout="fill"
-            objectFit="contain"
-            className="flex justify-center"
+            fill
+            className="object-contain"
           />
         </div>
         <div>
-          <h1>{product.name}</h1>
-          <p>{product.price}</p>
-          <p>{product.desc}</p>
+          <h1 className="text-[2.4rem] font-[700]">{product.name}</h1>
+          <p className="text-[3.2rem] font-[700] my-[1.8rem]">
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+              minimumFractionDigits: 0,
+            }).format(product.price)}
+          </p>
+          <p className="text-[1.4rem] whitespace-pre-line">{product.desc}</p>
         </div>
         <div className="px-[2.4rem]">
           <div className="bg-[#fff] border border-black/40 py-[1.2rem] px-[2.4rem]">
