@@ -5,7 +5,7 @@ import { useData } from "@/app/providers";
 import { useState } from "react";
 import { uploadImageFile } from "@/lib/upload";
 import Image from "next/image";
-import AddProductForm from "@/component/AddProductForm";
+import AddProductForm from "@/components/AddProductForm";
 
 export default function AdminProductsPage() {
   const {

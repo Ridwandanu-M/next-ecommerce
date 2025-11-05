@@ -21,18 +21,18 @@ export default function CategorySection({ category }) {
     Laptop,
   ];
   return (
-    <section className="mt-[9.6rem]">
-      <h2 className="text-[3.2rem] mb-[1.8rem] text-center">Category</h2>
-      <ul className="grid grid-cols-4 gap-[1.2rem]">
+    <section className="mt-24">
+      <h2 className="text-5xl mb-12 text-center">Category</h2>
+      <ul className="grid grid-cols-4 gap-4">
         {category.map((item, index) => {
           const Icon = categoryIcons[index];
           return (
             <li
               key={item.id}
-              className="flex justify-center items-center py-[1.8rem] gap-[1.2rem] bg-[#fff] border border-black/40 shadow-md hover:shadow-xl hover:-translate-y-[.4rem] transition-all"
+              className="flex justify-center items-center py-6 gap-4 bg-[#fff] border border-black/40 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all"
             >
-              <Icon color="#111" />
-              <p className="text-[1.4rem] text-[#111]">{item.name}</p>
+              <Icon size={24} color="#111" />
+              <p className="text-lg text-[#111]">{item.name}</p>
             </li>
           );
         })}

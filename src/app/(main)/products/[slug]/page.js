@@ -1,4 +1,4 @@
-import OrderBox from "@/component/OrderBox";
+import OrderBox from "@/components/OrderBox";
 import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
 

@@ -1,10 +1,10 @@
 "use client";
 
-import Banner from "@/component/Banner";
-import Brands from "@/component/Brands";
-import CategorySection from "@/component/CategorySection";
+import Banner from "@/components/Banner";
+import Brands from "@/components/Brands";
+import CategorySection from "@/components/CategorySection";
 import { useData } from "../providers";
-import ProductSection from "@/component/ProductSection";
+import ProductSection from "@/components/ProductSection";
 
 export default function Homepage() {
   const { products, category } = useData();

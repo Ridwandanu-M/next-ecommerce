@@ -78,22 +78,24 @@ export default function Footer() {
     <footer className="bg-[#111] text-[#fff] mt-[9.6rem]">
       {/* Features Section */}
       <div className="border-b border-[#333]">
-        <div className="max-w-[144rem] mx-auto px-[1.8rem] py-[4.8rem]">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[3.2rem]">
+        <div className="px-6 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <div key={index} className="flex items-center gap-[1.6rem]">
-                  <div className="w-[4.8rem] h-[4.8rem] bg-[#333] rounded-full flex items-center justify-center">
-                    <Icon size={24} className="text-[#fff]" />
-                  </div>
-                  <div>
-                    <h3 className="text-[1.6rem] font-[600] mb-[.4rem]">
-                      {feature.name}
-                    </h3>
-                    <p className="text-[1.2rem] text-[#ccc]">
-                      {feature.description}
-                    </p>
+                <div key={index} className="flex items-center justify-center">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-[#333] rounded-full flex items-center justify-center">
+                      <Icon className="text-[#fff]" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-[600] mb-2">
+                        {feature.name}
+                      </h3>
+                      <p className="text-md text-[#ccc]">
+                        {feature.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
               );
@@ -103,51 +105,44 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-[144rem] mx-auto px-[1.8rem] py-[4.8rem]">
+      <div className="max-w-[1440px] mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[3.2rem]">
           {/* Company Info */}
           <div>
-            <Link
-              href="/"
-              className="text-[2.4rem] font-[700] mb-[1.6rem] block"
-            >
+            <Link href="/" className="text-2xl font-[700] mb-2 block">
               Beli.com
             </Link>
-            <p className="text-[1.4rem] text-[#ccc] mb-[2.4rem] leading-relaxed">
+            <p className="text-md text-[#ccc] mb-2 leading-relaxed">
               Platform e-commerce terpercaya untuk kebutuhan teknologi dan
               elektronik Anda. Belanja mudah, aman, dan terpercaya.
             </p>
-            <div className="space-y-[1.2rem]">
-              <div className="flex items-center gap-[1.2rem]">
+            <div className="space-y-2">
+              <div className="flex items-center gap-4">
                 <Mail size={16} className="text-[#ccc]" />
-                <span className="text-[1.4rem] text-[#ccc]">
+                <span className="text-md text-[#ccc]">
                   danumaulana425@gmail.com
                 </span>
               </div>
-              <div className="flex items-center gap-[1.2rem]">
+              <div className="flex items-center gap-4">
                 <Phone size={16} className="text-[#ccc]" />
-                <span className="text-[1.4rem] text-[#ccc]">
-                  +62 813-1850-7103
-                </span>
+                <span className="text-md text-[#ccc]">+62 813-1850-7103</span>
               </div>
-              <div className="flex items-center gap-[1.2rem]">
+              <div className="flex items-center gap-4">
                 <MapPin size={16} className="text-[#ccc]" />
-                <span className="text-[1.4rem] text-[#ccc]">
-                  Jakarta, Indonesia
-                </span>
+                <span className="text-md text-[#ccc]">Jakarta, Indonesia</span>
               </div>
             </div>
           </div>
 
           {/* Main Menu */}
           <div>
-            <h3 className="text-[1.8rem] font-[600] mb-[1.6rem]">Menu Utama</h3>
-            <ul className="space-y-[1.2rem]">
+            <h3 className="text-2xl font-[600] mb-2">Menu Utama</h3>
+            <ul className="space-y-2">
               {mainMenus.map((menu, index) => (
                 <li key={index}>
                   <Link
                     href={menu.href}
-                    className="text-[1.4rem] text-[#ccc] hover:text-[#fff] transition-colors"
+                    className="text-md text-[#ccc] hover:text-[#fff] transition-colors"
                   >
                     {menu.name}
                   </Link>
@@ -158,13 +153,13 @@ export default function Footer() {
 
           {/* Account */}
           <div>
-            <h3 className="text-[1.8rem] font-[600] mb-[1.6rem]">Akun</h3>
-            <ul className="space-y-[1.2rem]">
+            <h3 className="text-2xl font-[600] mb-2">Akun</h3>
+            <ul className="space-y-2">
               {accountMenus.map((menu, index) => (
                 <li key={index}>
                   <Link
                     href={menu.href}
-                    className="text-[1.4rem] text-[#ccc] hover:text-[#fff] transition-colors"
+                    className="text-md text-[#ccc] hover:text-[#fff] transition-colors"
                   >
                     {menu.name}
                   </Link>
@@ -175,15 +170,15 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h3 className="text-[1.8rem] font-[600] mb-[1.6rem]">Kategori</h3>
-            <ul className="space-y-[1.2rem]">
+            <h3 className="text-wxl font-[600] mb-2">Kategori</h3>
+            <ul className="space-y-2">
               {categories.map((category, index) => {
                 const Icon = category.icon;
                 return (
                   <li key={index}>
                     <Link
                       href={category.href}
-                      className="flex items-center gap-[1.2rem] text-[1.4rem] text-[#ccc] hover:text-[#fff] transition-colors"
+                      className="flex items-center gap-4 text-md text-[#ccc] hover:text-[#fff] transition-colors"
                     >
                       <Icon size={16} />
                       {category.name}

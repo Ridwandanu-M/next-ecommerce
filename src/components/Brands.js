@@ -26,10 +26,10 @@ export default function Brands() {
 
   return (
     <div className="relative bg-[#fff] py-6 overflow-hidden">
-      <div className="absolute left-0 top-0 h-full w-[20rem] bg-gradient-to-r from-[#fff] to-transparent pointer-events-none z-20" />
-      <div className="absolute right-0 top-0 h-full w-[20rem] bg-gradient-to-l from-[#fff] to-transparent pointer-events-none z-20" />
+      <div className="absolute left-0 top-0 h-full w-64 bg-gradient-to-r from-[#fff] to-transparent pointer-events-none z-20" />
+      <div className="absolute right-0 top-0 h-full w-64 bg-gradient-to-l from-[#fff] to-transparent pointer-events-none z-20" />
       <div className="flex">
-        <ul className="marquee flex gap-[8.8rem] px-[1.2rem]">
+        <ul className="marquee flex gap-32 px-4">
           {brandsLogo.map((item, index) => (
             <Image
               key={index}
