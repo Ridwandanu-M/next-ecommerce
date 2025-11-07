@@ -170,7 +170,7 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h3 className="text-wxl font-[600] mb-2">Kategori</h3>
+            <h3 className="text-2xl font-[600] mb-2">Kategori</h3>
             <ul className="space-y-2">
               {categories.map((category, index) => {
                 const Icon = category.icon;
@@ -193,9 +193,9 @@ export default function Footer() {
 
       {/* Bottom Footer */}
       <div className="border-t border-[#333]">
-        <div className="max-w-[144rem] mx-auto px-[1.8rem] py-[2.4rem]">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-[1.6rem]">
-            <div className="text-[1.4rem] text-[#ccc]">
+        <div className="px-6 py-2">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-md text-[#ccc]">
               <p>
                 © 2025 Beli.com. All rights reserved. |{" "}
                 <Link href="/admin/signin" className="hover:text-[#fff]">
@@ -204,14 +204,14 @@ export default function Footer() {
                 by Ridwandanu Maulana
               </p>
             </div>
-            <div className="flex gap-[1.6rem]">
+            <div className="flex gap-2">
               {socialMedia.map((social, index) => {
                 const Icon = social.icon;
                 return (
                   <Link
                     key={index}
                     href={social.href}
-                    className="w-[4rem] h-[4rem] bg-[#333] rounded-full flex items-center justify-center hover:bg-[#555] transition-colors"
+                    className="w-12 h-12 bg-[#333] rounded-full flex items-center justify-center hover:bg-[#555] transition-colors"
                     aria-label={social.name}
                   >
                     <Icon size={18} />
