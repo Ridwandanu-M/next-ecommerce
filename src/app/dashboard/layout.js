@@ -1,10 +1,12 @@
-import Sidebar from "@/components/Sidebar";
+import UserSidebar from "@/components/UserSidebar";
 
 export default function DashboardLayout({ children }) {
   return (
     <section className="flex h-screen">
-      <Sidebar />
-      <div className="p-[8rem]">{children}</div>
+      <UserSidebar />
+      <div className="w-[1200px] mx-auto p-24 my-16 bg-white border shadow-md">
+        {children}
+      </div>
     </section>
   );
 }

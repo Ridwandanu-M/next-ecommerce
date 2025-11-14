@@ -16,8 +16,8 @@ export default async function ProductPage({ params }) {
 
   return (
     <section>
-      <div className="grid grid-cols-3 gap-[4.8rem] items-start">
-        <div className="relative aspect-square w-full max-w-[48rem] mb-[1.2rem]">
+      <div className="grid grid-cols-3 gap-12 items-start">
+        <div className="relative aspect-square w-full">
           <Image
             src={product.images?.[0] ?? "/placeholder-image.png"}
             alt={product.name}
@@ -26,21 +26,20 @@ export default async function ProductPage({ params }) {
           />
         </div>
         <div>
-          <h1 className="text-[2.4rem] font-[700]">{product.name}</h1>
-          <p className="text-[3.2rem] font-[700] my-[1.8rem]">
+          <h1 className="text-2xl font-semibold">{product.name}</h1>
+          <p className="text-3xl font-semibold my-[1.8rem]">
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
               minimumFractionDigits: 0,
             }).format(product.price)}
           </p>
-          <p className="text-[1.4rem] whitespace-pre-line">{product.desc}</p>
+          <p className="text-md whitespace-pre-line">{product.desc}</p>
         </div>
-        <div className="px-[2.4rem]">
-          <div className="bg-[#fff] border border-black/40 py-[1.2rem] px-[2.4rem]">
-            <p className="text-[2.4rem] mb-[1.8rem]">Create orders</p>
-            <OrderBox price={product.price} />
-          </div>
+
+        <div className="bg-[#fff] border border-black/40 p-8">
+          <p className="text-2xl mb-[1.8rem]">Create orders</p>
+          <OrderBox price={product.price} />
         </div>
       </div>
     </section>

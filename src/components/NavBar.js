@@ -38,11 +38,11 @@ export default async function NavBar() {
           ))}
         </ul>
       </div>
-      <div className="flex bg-[#fff] items-center gap-4 border-y border-y-black/40 py-2 px-6 z-50">
+      <div className="flex justify-between bg-[#fff] items-center gap-4 border-y border-y-black/40 py-2 px-6 z-50">
         <Link href="/" className="text-3xl font-[700]">
           Beli.com
         </Link>
-        <div className="w-full relative">
+        <div className="w-[70%] relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#000]/50" />
           <input
             placeholder="Search..."

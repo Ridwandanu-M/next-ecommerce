@@ -9,7 +9,7 @@ export default function OrderBox({ price }) {
   const total = Number(price) * multiple;
 
   return (
-    <section className="text-[1.4rem]">
+    <section>
       <div className="flex items-center justify-between ">
         <div className="flex items-center">
           <button
@@ -18,21 +18,21 @@ export default function OrderBox({ price }) {
                 ? () => setMultiple(1)
                 : () => setMultiple((prev) => prev - 1)
             }
-            className="px-[1.8rem] py-[.4rem] border border-[#111] hover:bg-[#111] hover:text-[#fff] active:bg-[#111] cursor-pointer"
+            className="px-3 py-1 border border-[#111] hover:bg-[#111] hover:text-[#fff] active:bg-[#111] cursor-pointer"
           >
             -
           </button>
-          <p className="text-center w-[4.8rem] py-[.4rem] border border-y-[#111]">
+          <p className="text-center w-16 py-1 border border-y-[#111]">
             {multiple}
           </p>
           <button
             onClick={() => setMultiple((prev) => prev + 1)}
-            className="px-[1.8rem] py-[.4rem] border border-[#111] hover:bg-[#111] hover:text-[#fff] active:bg-[#111] cursor-pointer"
+            className="px-3 py-1 border border-[#111] hover:bg-[#111] hover:text-[#fff] active:bg-[#111] cursor-pointer"
           >
             +
           </button>
         </div>
-        <p className="text-[1.8rem] font-[700]">
+        <p className="text-2xl font-semibold">
           {new Intl.NumberFormat("id-ID", {
             style: "currency",
             currency: "IDR",
@@ -40,27 +40,27 @@ export default function OrderBox({ price }) {
           }).format(total)}
         </p>
       </div>
-      <div className="flex flex-col mt-[3.2rem] gap-[.4rem]">
+      <div className="flex flex-col mt-8 gap-2">
         <Link
           href="#"
-          className="flex justify-center border border-[#111] bg-[#111] text-[#fff] py-[1.2rem] hover:text-[#111] hover:bg-[#fff]"
+          className="flex justify-center border border-[#111] bg-[#111] text-[#fff] text-md py-2 hover:text-[#111] hover:bg-[#fff]"
         >
           Add to Cart
         </Link>
         <Link
           href="#"
-          className="flex justify-center border border-[#111] bg-[#fff] text-[#111] py-[1.2rem] hover:text-[#fff] hover:bg-[#111]"
+          className="flex justify-center border border-[#111] bg-[#fff] text-[#111] text-md py-2 hover:text-[#fff] hover:bg-[#111]"
         >
           Buy Now
         </Link>
       </div>
-      <div className="flex justify-evenly mt-[3.2rem] font-[700]">
-        <Link href="#" className="flex items-center gap-[1.2rem]">
+      <div className="flex justify-evenly mt-6 font-semibold">
+        <Link href="#" className="flex items-center gap-3">
           <Heart />
           Wishlist
         </Link>
         <div className="border border-l-[#111]"></div>
-        <Link href="#" className="flex items-center gap-[1.2rem]">
+        <Link href="#" className="flex items-center gap-3">
           <Share2 />
           Share
         </Link>

@@ -6,12 +6,12 @@ const prisma = new PrismaClient();
 
 export async function POST(req) {
   try {
-    const { name, email, password } = await req.json();
+    const { name, email, password, address } = await req.json();
 
     if (!name || !email || !password) {
       return NextResponse.json(
         { error: "Semua input field harus terisi" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -19,14 +19,14 @@ export async function POST(req) {
     if (existingUser) {
       return NextResponse.json(
         { error: "Email sudah terdaftar" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await prisma.user.create({
-      data: { name, email, password: hashedPassword },
+      data: { name, email, password: hashedPassword, address },
     });
 
     return NextResponse.json({ message: "Registrasi Berhasil", user: newUser });

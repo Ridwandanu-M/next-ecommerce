@@ -22,7 +22,7 @@ export default function CategorySection({ category }) {
   ];
   return (
     <section className="mt-24">
-      <h2 className="text-5xl mb-12 text-center">Category</h2>
+      <h2 className="text-3xl mb-12 text-center">Category</h2>
       <ul className="grid grid-cols-4 gap-4">
         {category.map((item, index) => {
           const Icon = categoryIcons[index];
