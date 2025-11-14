@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
-import { Plus, X } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useData } from "@/app/providers";
 import { useState } from "react";
 import { uploadImageFile } from "@/lib/upload";
 import Image from "next/image";
 import AddProductForm from "@/components/AddProductForm";
+import EditProductForm from "@/components/EditProductForm";
+import AdminTitle from "@/components/AdminTitle";
 
 export default function AdminProductsPage() {
   const {
@@ -129,42 +131,42 @@ export default function AdminProductsPage() {
 
   return (
     <div>
-      <div className="flex items-center gap-[1.8rem] mb-[1.8rem]">
-        <h1 className="text-[3.2rem] font-[700]">List of Products</h1>
+      <div className="flex items-center gap-4 mb-4">
+        <AdminTitle>List of Products</AdminTitle>
         <button
           type="button"
           onClick={() => showProductForm()}
-          className="bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]"
+          className="bg-[#111] text-[#fff] p-2 cursor-pointer hover:bg-[#000]"
         >
           <Plus />
         </button>
       </div>
-      <div className="relative max-h-[85rem] overflow-y-scroll border-y border-y-[#111]">
-        <table className="w-full text-sm text-left rtl:text-right text-[#111] text-[1.4rem] border border-[#111] table-fixed shadow-lg">
-          <thead className="text-xs text-[#fff] bg-[#111]">
-            <tr className="text-[1.4rem]">
-              <th scope="col" className="w-[6rem] px-[2.4rem] py-[1.4rem]">
+      <div className="relative max-h-[880px] overflow-y-auto no-scrollbar border-y border-y-[#111]">
+        <table className="w-full text-left rtl:text-right text-[#111] border border-[#111] table-fixed shadow-lg">
+          <thead className="text-[#fff] bg-[#111] sticky top-0 z-10">
+            <tr>
+              <th scope="col" className="w-16 text-center px-4 py-4">
                 No
               </th>
-              <th scope="col" className="px-[2.4rem] py-[1.4rem]">
+              <th scope="col" className="px-4 py-4">
                 Product Name
               </th>
-              <th scope="col" className="px-[2.4rem] py-[1.4rem]">
+              <th scope="col" className="px-4 py-4">
                 Product Description
               </th>
-              <th scope="col" className="px-[2.4rem] py-[1.4rem]">
+              <th scope="col" className="px-4 py-4">
                 Category
               </th>
-              <th scope="col" className="px-[2.4rem] py-[1.4rem]">
+              <th scope="col" className="px-4 py-4">
                 Price
               </th>
-              <th scope="col" className="px-[2.4rem] py-[1.4rem]">
+              <th scope="col" className="px-4 py-4">
                 Stock
               </th>
-              <th scope="col" className="px-[2.4rem] py-[1.4rem]">
+              <th scope="col" className="px-4 py-4">
                 Image
               </th>
-              <th scope="col" className="px-[2.4rem] py-[1.4rem]">
+              <th scope="col" className="px-4 py-4">
                 Action
               </th>
             </tr>
@@ -179,29 +181,29 @@ export default function AdminProductsPage() {
             ) : (
               products.map((item, index) => (
                 <tr key={item.id} className="bg-white border-b border-[#111] ">
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="w-16 text-center px-4 py-4 border-t border-t-[#111]/25">
                     {index + 1}
                   </td>
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
                     {formatText(item.name)}
                   </td>
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
                     {formatText(item.desc)}
                   </td>
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
                     {item.category?.name ?? "-"}
                   </td>
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
                     {new Intl.NumberFormat("id-ID", {
                       style: "currency",
                       currency: "IDR",
                       minimumFractionDigits: 0,
                     }).format(item.price)}
                   </td>
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
                     {item.stock}
                   </td>
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
                     <Image
                       alt="product image"
                       src={item.images?.[0] ?? ""}
@@ -210,98 +212,24 @@ export default function AdminProductsPage() {
                       unoptimized
                     />
                   </td>
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
                     {editId === item.id ? (
-                      <div className="fixed inset-0 z-20 flex justify-center items-center backdrop-blur-xs">
-                        <form
-                          onSubmit={handleEditProduct}
-                          className="relative text-[1.4rem] flex flex-col justify-center w-[48rem] border border-[#111] py-[5.6rem] px-[4rem] bg-[#fff]"
-                        >
-                          <h2 className="text-[3.2rem] font-[700] text-center mb-[1.8rem]">
-                            Edit Product
-                          </h2>
-                          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-                            <label className="font-[700]">Name</label>
-                            <input
-                              type="text"
-                              value={prodName}
-                              onChange={(e) => setProdName(e.target.value)}
-                              placeholder="Product name"
-                              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-                            />
-                          </div>
-                          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-                            <label className="font-[700]">Description</label>
-                            <textarea
-                              placeholder="Product description"
-                              value={prodDesc}
-                              onChange={(e) => setProdDesc(e.target.value)}
-                              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-                            ></textarea>
-                          </div>
-                          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-                            <label className="font-[700]">Category</label>
-                            <select
-                              value={prodCategory}
-                              onChange={(e) => setProdCategory(e.target.value)}
-                              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none"
-                            >
-                              <option disabled>Select Category</option>
-                              {category.map((items, index) => (
-                                <option key={index} value={items.id}>
-                                  {items.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-                            <label className="font-[700]">Price</label>
-                            <input
-                              type="number"
-                              value={prodPrice}
-                              onChange={(e) => setProdPrice(e.target.value)}
-                              placeholder="Product price"
-                              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-                            />
-                          </div>
-                          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-                            <label className="font-[700]">Stock</label>
-                            <select
-                              value={prodStock}
-                              onChange={(e) => setProdStock(e.target.value)}
-                              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none"
-                            >
-                              <option disabled>Select Stock</option>
-                              <option value="ready">Ready</option>
-                              <option value="preorder">Pre Order</option>
-                            </select>
-                          </div>
-                          <div className="flex flex-col gap-[.4rem] mb-[.8rem]">
-                            <label className="font-[700]">Image</label>
-                            <input
-                              type="file"
-                              multiple
-                              onChange={(e) =>
-                                setProdImage(Array.from(e.target.files))
-                              }
-                              className="border border-[#111] p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-                            />
-                          </div>
-                          <button
-                            type="submit"
-                            className="font-[600] text-[#fff] bg-[#111] hover:bg-[#000] py-[.8rem] mt-[1.2rem] cursor-pointer"
-                          >
-                            Edit Product
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setEditId(null)}
-                            className="cursor-pointer"
-                          >
-                            <X className="absolute top-[1.8rem] right-[1.8rem]" />
-                          </button>
-                        </form>
-                      </div>
+                      <EditProductForm
+                        onHandleSubmit={handleEditProduct}
+                        onClose={() => setEditId(null)}
+                        prodName={prodName}
+                        setProdName={setProdName}
+                        prodDesc={prodDesc}
+                        setProdDesc={setProdDesc}
+                        category={category}
+                        prodCategory={prodCategory}
+                        setProdCategory={setProdCategory}
+                        prodPrice={prodPrice}
+                        setProdPrice={setProdPrice}
+                        prodStock={prodStock}
+                        setProdStock={setProdStock}
+                        setProdImage={setProdImage}
+                      />
                     ) : (
                       <>
                         <button

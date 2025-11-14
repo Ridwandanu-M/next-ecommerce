@@ -33,19 +33,19 @@ export default function AdminSidebar() {
   ];
 
   return (
-    <nav className="w-[28rem] bg-[#111] text-[#fff] p-[3.2rem] fixed left-0 top-0 h-screen z-20">
+    <nav className="w-[256px] bg-[#111] text-[#fff] p-6 h-screen">
       <div className="h-full flex flex-col justify-between">
         <div>
           <div>
-            <h1 className="text-[3.2rem] font-[700] px-[2.4rem]">Beli.com</h1>
+            <h1 className="text-2xl font-bold">Beli.com</h1>
           </div>
           <div>
-            <ul className="flex flex-col mt-[2.4rem] gap-[2.4rem]">
+            <ul className="flex flex-col mt-8 gap-4">
               {menus.map((items, index) => (
                 <Link
                   key={index}
                   href={items.path}
-                  className="flex items-center gap-[1.2rem] border border-transparent text-[1.8rem] px-[2.4rem] py-[1.2rem] hover:border hover:border-[#fff]"
+                  className="flex items-center gap-4 border border-transparent text-lg px-4 py-4 hover:border hover:border-[#fff]"
                 >
                   {items.icon}
                   {items.menu}
@@ -57,7 +57,7 @@ export default function AdminSidebar() {
         <div>
           <Link
             href="/"
-            className="flex items-center gap-[1.2rem] border border-transparent text-[1.8rem] px-[2.4rem] py-[1.2rem] hover:border hover:border-[#fff]"
+            className="flex items-center gap-4 border border-transparent text-lg px-6 py-4 hover:border hover:border-[#fff]"
           >
             <LogOut /> Log out
           </Link>

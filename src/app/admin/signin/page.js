@@ -25,43 +25,42 @@ export default function AdminSigninPage() {
   }
 
   return (
-    <div className="h-[100vh] flex justify-center items-center">
-      <div>
-        <div className="text-center">
-          <h1 className="text-[3.2rem] font-[600]">Admin</h1>
-        </div>
-        <form
-          onSubmit={handleLogin}
-          className="flex flex-col gap-[2.4rem] border border-black/40 text-[1.4rem] mt-[2rem] p-[2.4rem] w-[40rem] shadow-lg"
-        >
-          <div>
-            <h2 className="font-[600]">Username</h2>
-            <input
-              type="text"
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Admin username"
-              className="border border-black/40 w-full p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-            />
-          </div>
-          <div>
-            <div className="flex justify-between">
-              <h2 className="font-[600]">Password</h2>
-            </div>
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Admin password"
-              className="border border-black/40 w-full p-[.4rem] px-[.8rem] focus:outline-none focus:ring"
-            />
-          </div>
-          <button
-            type="submit"
-            className="font-[600] text-[#fff] bg-[#111] hover:bg-[#000] py-[.8rem] cursor-pointer"
-          >
-            Sign In
-          </button>
-        </form>
+    <div className="fixed left-1/2 top-1/2 -translate-1/2">
+      <div className="text-center">
+        <h1 className="text-2xl font-semibold">Admin</h1>
+        <p className="text-md text-[#000]/70">Admin Beli.com</p>
       </div>
+      <form
+        onSubmit={handleLogin}
+        className="flex flex-col gap-4 border border-black/40 text-md mt-4 p-12 w-md shadow-lg"
+      >
+        <div>
+          <h2 className="font-medium">Username</h2>
+          <input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Admin username"
+            className="border border-black/40 w-full p-1 px-2 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <div className="flex justify-between">
+            <h2 className="font-[600]">Password</h2>
+          </div>
+          <input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Admin password"
+            className="border border-black/40 w-full p-1 px-2 focus:outline-none focus:ring"
+          />
+        </div>
+        <button
+          type="submit"
+          className="font-medium text-[#fff] bg-[#111] hover:bg-[#000] py-2 cursor-pointer"
+        >
+          Sign In
+        </button>
+      </form>
     </div>
   );
 }

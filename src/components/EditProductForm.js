@@ -1,7 +1,8 @@
 import { X } from "lucide-react";
 
-export default function AddProductForm({
+export default function EditProductForm({
   onHandleSubmit,
+  onClose,
   prodName,
   setProdName,
   prodDesc,
@@ -14,7 +15,6 @@ export default function AddProductForm({
   prodStock,
   setProdStock,
   setProdImage,
-  showProductForm,
 }) {
   return (
     <div className="fixed inset-0 z-20 flex justify-center items-center backdrop-blur-xs">
@@ -22,7 +22,10 @@ export default function AddProductForm({
         onSubmit={onHandleSubmit}
         className="relative flex flex-col justify-center w-[36rem] border border-[#111] py-16 px-12 bg-[#fff]"
       >
-        <h2 className="text-2xl font-semibold text-center mb-6">Add Product</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          Edit Product
+        </h2>
+
         <div className="flex flex-col gap-1 mb-3">
           <label className="font-semibold">Name</label>
           <input
@@ -33,6 +36,7 @@ export default function AddProductForm({
             className="border border-[#111] p-2 px-3 focus:outline-none focus:ring"
           />
         </div>
+
         <div className="flex flex-col gap-1 mb-3">
           <label className="font-semibold">Description</label>
           <textarea
@@ -42,11 +46,12 @@ export default function AddProductForm({
             className="border border-[#111] p-2 px-3 focus:outline-none focus:ring"
           ></textarea>
         </div>
+
         <div className="flex flex-col gap-1 mb-3">
           <label className="font-semibold">Category</label>
           <select
             value={prodCategory}
-            onChange={(e) => setProdCategory(Number(e.target.value))}
+            onChange={(e) => setProdCategory(e.target.value)}
             className="border border-[#111] p-2 px-3 focus:outline-none"
           >
             <option disabled>Select Category</option>
@@ -57,6 +62,7 @@ export default function AddProductForm({
             ))}
           </select>
         </div>
+
         <div className="flex flex-col gap-1 mb-3">
           <label className="font-semibold">Price</label>
           <input
@@ -67,6 +73,7 @@ export default function AddProductForm({
             className="border border-[#111] p-2 px-3 focus:outline-none focus:ring"
           />
         </div>
+
         <div className="flex flex-col gap-1 mb-3">
           <label className="font-semibold">Stock</label>
           <select
@@ -79,6 +86,7 @@ export default function AddProductForm({
             <option value="preorder">Pre Order</option>
           </select>
         </div>
+
         <div className="flex flex-col gap-1 mb-3">
           <label className="font-semibold">Image</label>
           <input
@@ -88,17 +96,15 @@ export default function AddProductForm({
             className="border border-[#111] p-2 px-3 focus:outline-none focus:ring"
           />
         </div>
+
         <button
           type="submit"
           className="font-[600] text-[#fff] bg-[#111] hover:bg-[#000] py-2 mt-4 cursor-pointer"
         >
-          Add Product
+          Edit Product
         </button>
-        <button
-          type="button"
-          onClick={() => showProductForm()}
-          className="cursor-pointer"
-        >
+
+        <button type="button" onClick={onClose} className="cursor-pointer">
           <X className="absolute top-4 right-4" />
         </button>
       </form>

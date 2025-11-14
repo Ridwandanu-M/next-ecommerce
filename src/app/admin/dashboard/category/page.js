@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { DataProvider, useData } from "@/app/providers";
 import { Plus } from "lucide-react";
+import AdminTitle from "@/components/AdminTitle";
 
 export default function AdminCategoryPage() {
   const { category, createCategory, editCategory, deleteCategory, loading } =
@@ -43,12 +44,12 @@ export default function AdminCategoryPage() {
 
   return (
     <div>
-      <div className="flex mb-[1.8rem] justify-between">
-        <div className="flex items-center gap-[1.8rem]">
-          <h1 className="text-[3.2rem] font-[700]">Category of Products</h1>
+      <div>
+        <div className="flex items-center gap-4 mb-4">
+          <AdminTitle>Category of Product</AdminTitle>
           <button
             onClick={() => showAddCategory()}
-            className="bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]"
+            className="bg-[#111] text-[#fff] p-2 cursor-pointer hover:bg-[#000]"
           >
             <Plus />
           </button>
@@ -70,22 +71,22 @@ export default function AdminCategoryPage() {
           </form>
         )}
       </div>
-      <div className="relative">
-        <table className="w-full text-sm text-left rtl:text-right text-[#111] text-[1.4rem] border border-[#111] table-fixed shadow-lg">
-          <thead className="text-xs text-[#fff] bg-[#111]">
-            <tr className="text-[1.4rem]">
-              <th scope="col" className="w-[6rem] px-[2.4rem] py-[1.4rem]">
+      <div className="relative max-h-[880px] overflow-y-auto no-scrollbar border-y border-y-[#111]">
+        <table className="w-full text-left rtl:text-right text-[#111] border border-[#111] table-fixed shadow-lg">
+          <thead className="text-[#fff] bg-[#111] sticky top-0 z-10">
+            <tr>
+              <th scope="col" className="w-16 text-center px-4 py-4">
                 No
               </th>
-              <th scope="col" className="w-[80rem] px-[2.4rem] py-[1.4rem]">
+              <th scope="col" className="px-4 py-4">
                 Category
               </th>
-              <th scope="col" className="w-[20rem] px-[2.4rem] py-[1.4rem]">
+              <th scope="col" className="px-4 py-4">
                 Action
               </th>
             </tr>
           </thead>
-          <tbody className="relative">
+          <tbody>
             {loading ? (
               <tr className="w-full">
                 <td colSpan="3" className="px-[40%] py-[3.2rem]">
@@ -95,13 +96,13 @@ export default function AdminCategoryPage() {
             ) : (
               category.map((items, index) => (
                 <tr key={items.id}>
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="w-16 text-center px-4 py-4 border-t border-t-[#111]/25">
                     {index + 1}
                   </td>
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
                     {items.name}
                   </td>
-                  <td className="px-[2.4rem] py-[1.4rem] border-t border-t-[#111]/25">
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
                     {editId === items.id ? (
                       <form
                         onSubmit={handleEditCategory}
