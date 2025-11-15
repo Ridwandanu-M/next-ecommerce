@@ -3,17 +3,37 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function SigninPage() {
   const router = useRouter();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [isLoading, setIsloading] = useState(false);
 
   async function handleLogin(e) {
     e.preventDefault();
-    // TODO: Implement your own authentication logic here
-    console.log("Login attempt:", form);
-    setError("Authentication not implemented yet");
+    setError("");
+    setIsloading(true);
+
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: form.email,
+        password: form.password,
+      });
+
+      if (result?.ok) {
+        router.push("/");
+      } else {
+        setError(result?.error || "Email or password incorrect");
+      }
+    } catch (e) {
+      console.error(`Something went wrong: ${e}`);
+      setError(e);
+    } finally {
+      setIsloading(false);
+    }
   }
 
   return (
@@ -32,6 +52,7 @@ export default function SigninPage() {
             type="email"
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             placeholder="example@email.com"
+            required
             className="border border-black/40 w-full p-1 px-2 focus:outline-none focus:ring"
           />
         </div>
@@ -46,6 +67,7 @@ export default function SigninPage() {
             type="password"
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             placeholder="Create password"
+            required
             className="border border-black/40 w-full p-1 px-2 focus:outline-none focus:ring"
           />
         </div>
@@ -53,7 +75,7 @@ export default function SigninPage() {
           type="submit"
           className="font-medium text-[#fff] bg-[#111] hover:bg-[#000] py-2 cursor-pointer"
         >
-          Sign In
+          {isLoading ? "Signin In..." : "Sign In"}
         </button>
         <div className="w-full border-t border-t-[#000]/40"></div>
         <Link

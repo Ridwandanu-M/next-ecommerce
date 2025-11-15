@@ -1,27 +1,32 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
-  const router = useRouter();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const res = await fetch("/api/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-
-    const data = await res.json();
-    if (data.message) {
-      setMessage(data.message);
-      router.push("/signin");
-    } else {
-      setMessage(data.error);
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setMessage(data.message);
+      } else {
+        setMessage(data.error);
+      }
+    } catch (e) {
+      console.error(`Error signing up: ${e}`);
+      setMessage("An unexpected error occurred");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -66,7 +71,7 @@ export default function SignupPage() {
           type="submit"
           className="font-medium text-[#fff] bg-[#111] hover:bg-[#000] py-2 cursor-pointer"
         >
-          Sign Up
+          {isLoading ? "Signing Up..." : "Sign Up"}
         </button>
         <div className="w-full border-t border-t-[#000]/40"></div>
         <Link
