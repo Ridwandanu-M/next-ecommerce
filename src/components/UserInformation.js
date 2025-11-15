@@ -1,4 +1,10 @@
-export default function UserInformation({ username, email }) {
+export default function UserInformation({
+  username,
+  email,
+  birth,
+  gender,
+  contact,
+}) {
   return (
     <section className="flex flex-col w-full">
       <div className="flex justify-between items-center">
@@ -11,14 +17,20 @@ export default function UserInformation({ username, email }) {
         <p className="text-xl text-gray-800 font-medium">Personal Profile</p>
         <div className="flex gap-8 mt-2">
           <div className="flex flex-col gap-4">
-            <p>Nama</p>
+            <p>Name</p>
             <p>Birth of Date</p>
             <p>Gender</p>
           </div>
           <div className="flex flex-col gap-4">
             <p>{username}</p>
-            <p>29 July 2005</p>
-            <p>Male</p>
+            <p>{birth ?? "Haven't set yet"}</p>
+            <p>
+              {gender === "male"
+                ? "Male"
+                : gender === "female"
+                ? "Female"
+                : "Haven't set yet"}
+            </p>
           </div>
         </div>
       </div>
@@ -31,7 +43,7 @@ export default function UserInformation({ username, email }) {
           </div>
           <div className="flex flex-col gap-4">
             <p>{email}</p>
-            <p>081318507103</p>
+            <p>{contact ?? "Haven't set yet"}</p>
           </div>
         </div>
       </div>

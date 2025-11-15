@@ -1,11 +1,17 @@
+import Image from "next/image";
 import Link from "next/link";
 
-export default function UserImageProfile() {
+export default function UserImageProfile({ image }) {
   return (
     <section className="flex flex-col border p-4 shadow-md">
-      <div className="bg-gray-400 text-black/25 border border-gray-700 w-64 h-64 flex justify-center items-center">
-        <p>Placeholder</p>
-      </div>
+      {image === null ? (
+        <div className="bg-gray-400 text-black/25 border border-gray-700 w-64 h-64 flex justify-center items-center">
+          <p>Placeholder</p>
+        </div>
+      ) : (
+        <Image src={image} width={64} height={64} alt="User Image Profile" />
+      )}
+
       <div className="flex flex-col mt-2 w-64">
         <Link
           href="/dashboard/profile"

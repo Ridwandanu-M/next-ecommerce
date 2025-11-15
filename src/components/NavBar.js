@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { ShoppingCart, Bell, CircleUserRound, Search } from "lucide-react";
+import { useSession } from "next-auth/react";
 
-export default async function NavBar() {
+export default function NavBar() {
+  const { data: session, status } = useSession();
+
   const menus = [
     {
       menu: "Contact",
@@ -49,45 +54,40 @@ export default async function NavBar() {
         <div className="flex items-center gap-6">
           <ShoppingCart size={24} />
           <Bell size={24} />
-          <div className="flex gap-4">
-            <Link
-              href="/signin"
-              className="bg-[#fff] border border-[#111] px-10 py-2 text-[#111] font-[500] text-sm text-nowrap hover:bg-[#111] hover:text-[#fff] hover:border-[#fff]"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/signup"
-              className="bg-[#111] border border-[#111] px-10 py-2 text-[#fff] font-[500] text-sm text-nowrap hover:bg-[#fff] hover:text-[#111] hover:border-[#111]"
-            >
-              Sign Up
-            </Link>
-          </div>
-          {/* <div>
+          <div>
             {session ? (
               <Link
                 href="/dashboard/profile"
                 className="flex items-center gap-4 text-md"
               >
-                <CircleUserRound size={24} /> {session.user?.name}
+                <CircleUserRound size={24} />{" "}
+                {status === "loading"
+                  ? "Loading session..."
+                  : session?.user?.name}
               </Link>
             ) : (
               <div className="flex gap-4">
-                <Link
-                  href="/signin"
-                  className="bg-[#fff] border border-[#111] px-10 py-2 text-[#111] font-[500] text-sm text-nowrap hover:bg-[#111] hover:text-[#fff] hover:border-[#fff]"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/signup"
-                  className="bg-[#111] border border-[#111] px-10 py-2 text-[#fff] font-[500] text-sm text-nowrap hover:bg-[#fff] hover:text-[#111] hover:border-[#111]"
-                >
-                  Sign Up
-                </Link>
+                {status === "loading" ? (
+                  "Loading session..."
+                ) : (
+                  <>
+                    <Link
+                      href="/signin"
+                      className="bg-[#fff] border border-[#111] px-10 py-2 text-[#111] font-[500] text-sm text-nowrap hover:bg-[#111] hover:text-[#fff] hover:border-[#fff]"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="bg-[#111] border border-[#111] px-10 py-2 text-[#fff] font-[500] text-sm text-nowrap hover:bg-[#fff] hover:text-[#111] hover:border-[#111]"
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
               </div>
             )}
-          </div> */}
+          </div>
         </div>
       </div>
     </header>
