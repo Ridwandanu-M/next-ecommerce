@@ -1,6 +1,5 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { DataProvider } from "./providers";
@@ -16,9 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <DataProvider>
-          <SessionProvider>
-            <main className={`${inter.variable}`}>{children}</main>
-          </SessionProvider>
+          <main className={`${inter.variable}`}>{children}</main>
         </DataProvider>
       </body>
     </html>

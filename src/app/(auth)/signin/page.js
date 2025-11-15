@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function SigninPage() {
@@ -12,17 +11,9 @@ export default function SigninPage() {
 
   async function handleLogin(e) {
     e.preventDefault();
-    const res = await signIn("credentials", {
-      email: form.email,
-      password: form.password,
-      redirect: false,
-    });
-
-    if (res?.error) {
-      setError("Email atau password salah");
-    } else {
-      router.push("/");
-    }
+    // TODO: Implement your own authentication logic here
+    console.log("Login attempt:", form);
+    setError("Authentication not implemented yet");
   }
 
   return (

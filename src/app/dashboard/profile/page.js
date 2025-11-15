@@ -1,13 +1,13 @@
 "use client";
-import { useSession } from "next-auth/react";
 import UserInformation from "@/components/UserInformation";
 import UserImageProfile from "@/components/UserImageProfile";
 import HomeAddress from "@/components/HomeAddress";
 
 export default function ProfilePage() {
-  const { data: session, status } = useSession();
-  const username = session?.user?.name ?? "N/A";
-  const email = session?.user?.email ?? "N/A";
+  // TODO: Replace with your own auth solution
+  const username = "User";
+  const email = "user@example.com";
+  const status = "authenticated";
 
   const loadInfo = () => {
     if (status === "loading") {

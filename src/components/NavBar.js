@@ -1,10 +1,7 @@
-import { getServerSession } from "next-auth";
-import { authOption } from "@/app/api/auth/[...nextauth]/route";
 import Link from "next/link";
 import { ShoppingCart, Bell, CircleUserRound, Search } from "lucide-react";
 
 export default async function NavBar() {
-  const session = await getServerSession(authOption);
   const menus = [
     {
       menu: "Contact",
@@ -52,7 +49,21 @@ export default async function NavBar() {
         <div className="flex items-center gap-6">
           <ShoppingCart size={24} />
           <Bell size={24} />
-          <div>
+          <div className="flex gap-4">
+            <Link
+              href="/signin"
+              className="bg-[#fff] border border-[#111] px-10 py-2 text-[#111] font-[500] text-sm text-nowrap hover:bg-[#111] hover:text-[#fff] hover:border-[#fff]"
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/signup"
+              className="bg-[#111] border border-[#111] px-10 py-2 text-[#fff] font-[500] text-sm text-nowrap hover:bg-[#fff] hover:text-[#111] hover:border-[#111]"
+            >
+              Sign Up
+            </Link>
+          </div>
+          {/* <div>
             {session ? (
               <Link
                 href="/dashboard/profile"
@@ -76,7 +87,7 @@ export default async function NavBar() {
                 </Link>
               </div>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </header>

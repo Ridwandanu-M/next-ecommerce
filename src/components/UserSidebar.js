@@ -7,12 +7,11 @@ import {
   LogOut,
   House,
 } from "lucide-react";
-import { signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function UserSidebar() {
-  const { data: session, status } = useSession();
+  // TODO: Replace with your own auth solution
+  const username = "User";
 
   const menus = [
     {
@@ -40,9 +39,7 @@ export default function UserSidebar() {
     <aside className="w-[256px] bg-white border-r p-6 flex flex-col h-full shadow-md">
       <div className="flex flex-col items-center">
         <CircleUserRound size={60} strokeWidth={1} />
-        <p className="text-lg">
-          {status === "loading" ? "Loading" : formatName(session?.user?.name)}
-        </p>
+        <p className="text-lg">{formatName(username)}</p>
       </div>
       <div className="mt-8 flex-1 flex flex-col justify-between">
         <ul className="flex flex-col gap-4">
@@ -66,8 +63,7 @@ export default function UserSidebar() {
             Home
           </Link>
           <Link
-            href=""
-            onClick={() => signOut({ callbackUrl: "/" })}
+            href="/"
             className="flex gap-4 px-4 py-2 border border-transparent hover:border hover:border-[#111]"
           >
             <LogOut /> Sign Out
