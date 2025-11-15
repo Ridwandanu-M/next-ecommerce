@@ -4,6 +4,8 @@ import AdminTitle from "@/components/AdminTitle";
 
 export default function AdminUsersPage() {
   const { user, loading } = useData();
+
+  console.log(user);
   return (
     <div>
       <div className="mb-4">
@@ -21,6 +23,12 @@ export default function AdminUsersPage() {
               </th>
               <th scope="col" className="px-4 py-4">
                 Email
+              </th>
+              <th scope="col" className="px-4 py-4">
+                Address
+              </th>
+              <th scope="col" className="px-4 py-4">
+                Created At
               </th>
               <th scope="col" className="px-4 py-4">
                 Action
@@ -45,6 +53,12 @@ export default function AdminUsersPage() {
                   </td>
                   <td className="px-4 py-4 border-t border-t-[#111]/25">
                     {items.email}
+                  </td>
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
+                    {items.address}
+                  </td>
+                  <td className="px-4 py-4 border-t border-t-[#111]/25">
+                    {items.created_at.slice(0, 10)}
                   </td>
                   <td className="px-4 py-4 border-t border-t-[#111]/25">
                     <button className="hover:underline cursor-pointer">

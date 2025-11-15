@@ -24,11 +24,16 @@ const authOption = {
 
         const isValid = await bcrypt.compare(
           credentials.password,
-          user.password,
+          user.password
         );
         if (!isValid) return null;
 
-        return { id: user.id.toString(), name: user.name, email: user.email };
+        return {
+          id: user.id.toString(),
+          name: user.name,
+          email: user.email,
+          address: user.address,
+        };
       },
     }),
   ],

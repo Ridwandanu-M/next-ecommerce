@@ -2,7 +2,7 @@
 CREATE TYPE "public"."RoleUser" AS ENUM ('admin', 'customer');
 
 -- CreateEnum
-CREATE TYPE "public"."ProductStock" AS ENUM ('ready', 'preorder');
+CREATE TYPE "public"."ProductStock" AS ENUM ('ready', 'preorder', 'outofstock');
 
 -- CreateEnum
 CREATE TYPE "public"."StatusOrder" AS ENUM ('pending', 'success', 'failed');
@@ -13,6 +13,7 @@ CREATE TABLE "public"."User" (
     "name" VARCHAR(255) NOT NULL,
     "email" VARCHAR(255) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
+    "address" TEXT,
     "role" "public"."RoleUser" NOT NULL DEFAULT 'customer',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -21,21 +22,13 @@ CREATE TABLE "public"."User" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."Location" (
-    "id" SERIAL NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL
-);
-
--- CreateTable
 CREATE TABLE "public"."Product" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
+    "slug" TEXT NOT NULL,
     "desc" TEXT NOT NULL,
     "price" BIGINT NOT NULL,
     "categoryId" INTEGER NOT NULL,
-    "locationId" INTEGER NOT NULL,
     "stock" "public"."ProductStock" NOT NULL,
     "images" TEXT[],
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -98,7 +91,7 @@ CREATE TABLE "public"."OrderProduct" (
 CREATE UNIQUE INDEX "User_email_key" ON "public"."User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Location_id_key" ON "public"."Location"("id");
+CREATE UNIQUE INDEX "Product_slug_key" ON "public"."Product"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Order_code_key" ON "public"."Order"("code");
@@ -111,9 +104,6 @@ CREATE UNIQUE INDEX "OrderDetail_orderId_key" ON "public"."OrderDetail"("orderId
 
 -- AddForeignKey
 ALTER TABLE "public"."Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "public"."Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "public"."Product" ADD CONSTRAINT "Product_locationId_fkey" FOREIGN KEY ("locationId") REFERENCES "public"."Location"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
