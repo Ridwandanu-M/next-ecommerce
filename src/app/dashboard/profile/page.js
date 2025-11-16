@@ -1,12 +1,10 @@
 import UserInformation from "@/components/UserInformation";
 import UserImageProfile from "@/components/UserImageProfile";
 import HomeAddress from "@/components/HomeAddress";
+import prisma from "@/lib/prisma";
+import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { PrismaClient } from "@prisma/client";
-import Link from "next/link";
-
-const prisma = new PrismaClient();
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);

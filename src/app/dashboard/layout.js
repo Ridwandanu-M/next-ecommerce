@@ -1,20 +1,17 @@
-"use client";
-
 import LoadingScreen from "@/components/LoadingScreen";
 import UserSidebar from "@/components/UserSidebar";
-import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
-export default function DashboardLayout({ children }) {
-  const { status } = useSession();
-  if (status === "unauthenticated") return redirect("/signin");
-  if (status === "loading") return <LoadingScreen />;
+export default async function DashboardLayout({ children }) {
+  const session = await getServerSession(authOptions);
+  if (!session === "unauthenticated") return redirect("/signin");
 
   return (
     <section className="flex h-screen">
       <UserSidebar />
-
-      <div className="w-[1200px] mx-auto p-24 my-16 bg-white border shadow-md">
+      <div className="w-[1440px] mx-auto p-12 my-16 bg-white border shadow-md">
         {children}
       </div>
     </section>
