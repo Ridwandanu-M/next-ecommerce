@@ -10,7 +10,7 @@ export async function POST(req) {
     if (!name || !email || !password) {
       return NextResponse.json(
         { error: "All input required!" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -18,7 +18,7 @@ export async function POST(req) {
     if (existingUser)
       return NextResponse.json(
         { error: "Email already in use" },
-        { status: 409 }
+        { status: 409 },
       );
 
     const passwordHash = await hash(password, 10);
@@ -33,13 +33,13 @@ export async function POST(req) {
 
     return NextResponse.json(
       { message: "Registration success", user },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
       { error: "Something went wrong" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

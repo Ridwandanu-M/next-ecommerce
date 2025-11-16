@@ -6,6 +6,7 @@ import {
   Heart,
   LogOut,
   House,
+  ShoppingCart,
 } from "lucide-react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
@@ -25,6 +26,11 @@ export default function UserSidebar() {
       menu: "Wishlist",
       path: "/dashboard/wishlist",
       icon: <Heart strokeWidth={1.5} />,
+    },
+    {
+      menu: "Cart",
+      path: "/dashboard/cart",
+      icon: <ShoppingCart strokeWidth={1.5} />,
     },
   ];
 

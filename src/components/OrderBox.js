@@ -2,8 +2,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Heart, Share2 } from "lucide-react";
+import CartButton from "./CartButton";
 
-export default function OrderBox({ price }) {
+export default function OrderBox({ price, id }) {
   const [multiple, setMultiple] = useState(1);
 
   const total = Number(price) * multiple;
@@ -41,18 +42,13 @@ export default function OrderBox({ price }) {
         </p>
       </div>
       <div className="flex flex-col mt-8 gap-2">
-        <Link
+        <CartButton productId={id} />
+        <button
           href="#"
-          className="flex justify-center border border-[#111] bg-[#111] text-[#fff] text-md py-2 hover:text-[#111] hover:bg-[#fff]"
-        >
-          Add to Cart
-        </Link>
-        <Link
-          href="#"
-          className="flex justify-center border border-[#111] bg-[#fff] text-[#111] text-md py-2 hover:text-[#fff] hover:bg-[#111]"
+          className="flex justify-center border border-[#111] bg-[#fff] text-[#111] text-md py-2 hover:text-[#fff] hover:bg-[#111] cursor-pointer"
         >
           Buy Now
-        </Link>
+        </button>
       </div>
       <div className="flex justify-evenly mt-6 font-semibold">
         <Link href="#" className="flex items-center gap-3">

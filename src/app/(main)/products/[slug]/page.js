@@ -39,7 +39,7 @@ export default async function ProductPage({ params }) {
 
         <div className="bg-[#fff] border border-black/40 p-8">
           <p className="text-2xl mb-[1.8rem]">Create orders</p>
-          <OrderBox price={product.price} />
+          <OrderBox price={product.price} id={product.id} />
         </div>
       </div>
     </section>

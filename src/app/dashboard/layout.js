@@ -6,12 +6,12 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export default async function DashboardLayout({ children }) {
   const session = await getServerSession(authOptions);
-  if (!session === "unauthenticated") return redirect("/signin");
+  if (!session) return redirect("/signin");
 
   return (
     <section className="flex h-screen">
       <UserSidebar />
-      <div className="w-[1440px] mx-auto p-12 my-16 bg-white border shadow-md">
+      <div className="w-[1440px] mx-auto p-12 h-[800px] my-auto bg-white border shadow-md">
         {children}
       </div>
     </section>
