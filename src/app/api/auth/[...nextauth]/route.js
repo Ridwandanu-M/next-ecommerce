@@ -28,7 +28,7 @@ export const authOptions = {
 
           const isPasswordValid = await compare(
             credentials.password,
-            user.password
+            user.password,
           );
 
           if (!isPasswordValid) {
@@ -36,7 +36,7 @@ export const authOptions = {
           }
 
           return {
-            id: String(user.id),
+            id: user.id,
           };
         } catch (error) {
           console.error("Auth error:", error);

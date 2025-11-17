@@ -1,4 +1,3 @@
-import LoadingScreen from "@/components/LoadingScreen";
 import UserSidebar from "@/components/UserSidebar";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";

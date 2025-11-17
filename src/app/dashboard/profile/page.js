@@ -14,6 +14,12 @@ export default async function ProfilePage() {
     },
   });
 
+  const username = userData.name || null;
+  const email = userData.email || null;
+  const birth = userData.birthOfDate?.toLocaleDateString().slice(0, 10) || null;
+  const gender = userData.gender || null;
+  const contact = userData.phone || null;
+
   if (!userData)
     return (
       <Link
@@ -29,11 +35,11 @@ export default async function ProfilePage() {
       <div className="flex gap-8">
         <UserImageProfile image={userData.image} />
         <UserInformation
-          username={userData.name}
-          email={userData.email}
-          birth={userData.birthOfDate.toLocaleDateString().slice(0, 10)}
-          gender={userData.gender}
-          contact={userData.phone}
+          username={username}
+          email={email}
+          birth={birth}
+          gender={gender}
+          contact={contact}
         />
       </div>
       <div className="flex flex-col">
