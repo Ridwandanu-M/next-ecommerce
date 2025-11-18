@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { ShoppingCart, Bell, CircleUserRound, Search } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useCartCount } from "@/hooks/useCart";
 
 export default function NavBar() {
   const { data: session, status } = useSession();
+  const { count: cartLength, loading: isLoading } = useCartCount();
 
   const menus = [
     {
@@ -54,9 +56,11 @@ export default function NavBar() {
         <div className="flex items-center gap-6">
           <Link href="/dashboard/cart" className="cursor-pointer relative">
             <ShoppingCart size={24} />
-            <span className="absolute -top-2 -right-2 bg-[#111] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-              {2}
-            </span>
+            {session?.user && (isLoading || cartLength > 0) && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
+                {isLoading ? "..." : cartLength > 99 ? "99+" : cartLength}
+              </span>
+            )}
           </Link>
 
           <Bell size={24} />

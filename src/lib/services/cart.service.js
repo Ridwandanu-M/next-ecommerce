@@ -42,3 +42,51 @@ export async function removeCartItem(userId, productId) {
     },
   });
 }
+
+export async function getCartSummary(userId) {
+  const cartItems = await prisma.cartItem.findMany({
+    where: { userId: userId },
+    include: {
+      product: true,
+    },
+  });
+
+  const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = cartItems.reduce((sum, item) => {
+    return sum + item.quantity * Number(item.product.price);
+  }, 0);
+
+  return {
+    totalQuantity,
+    totalPrice,
+    itemCount: cartItems.length,
+  };
+}
+
+export async function getCartTotalQuantity(userId) {
+  const aggregate = await prisma.cartItem.aggregate({
+    where: { userId: userId },
+    _sum: {
+      quantity: true,
+    },
+  });
+
+  return aggregate._sum.quantity || 0;
+}
+
+export async function getCartTotalValue(userId) {
+  const cartItems = await prisma.cartItem.findMany({
+    where: { userId: userId },
+    include: {
+      product: {
+        select: {
+          price: true,
+        },
+      },
+    },
+  });
+
+  return cartItems.reduce((total, item) => {
+    return total + item.quantity * Number(item.product.price);
+  }, 0);
+}

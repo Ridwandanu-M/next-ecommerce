@@ -8,6 +8,7 @@ import {
   House,
   ShoppingCart,
 } from "lucide-react";
+import CartBadge from "./CartBadge";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
@@ -15,7 +16,6 @@ import { redirect } from "next/navigation";
 export default function UserSidebar() {
   const { data: session, status } = useSession();
   const username = session?.user?.name;
-  console.log(username);
 
   const menus = [
     {
@@ -31,7 +31,7 @@ export default function UserSidebar() {
     {
       menu: "Cart",
       path: "/dashboard/cart",
-      icon: <ShoppingCart strokeWidth={1.5} />,
+      icon: <CartBadge size={24} />,
     },
   ];
 
