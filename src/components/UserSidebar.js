@@ -15,6 +15,7 @@ import { redirect } from "next/navigation";
 export default function UserSidebar() {
   const { data: session, status } = useSession();
   const username = session?.user?.name;
+  console.log(username);
 
   const menus = [
     {
@@ -48,7 +49,7 @@ export default function UserSidebar() {
       <div className="flex flex-col items-center">
         <CircleUserRound size={60} strokeWidth={1} />
         <p className="text-lg">
-          {status === "loading" ? "Loading data..." : username}
+          {status === "loading" ? "Loading data..." : formatName(username)}
         </p>
       </div>
       <div className="mt-8 flex-1 flex flex-col justify-between">

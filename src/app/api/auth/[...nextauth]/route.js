@@ -37,6 +37,8 @@ export const authOptions = {
 
           return {
             id: user.id,
+            name: user.name,
+            email: user.email,
           };
         } catch (error) {
           console.error("Auth error:", error);
@@ -56,12 +58,16 @@ export const authOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
         session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
       }
       return session;
     },
