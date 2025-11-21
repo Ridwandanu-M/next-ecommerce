@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { DataProvider, useData } from "@/app/providers";
+import { useState } from "react";
+import { useData } from "@/app/providers";
 import { Plus } from "lucide-react";
 import AdminTitle from "@/components/AdminTitle";
 
@@ -15,6 +15,7 @@ export default function AdminCategoryPage() {
   function showAddCategory() {
     setShowAddCategoryForm((prev) => !prev);
     setEditId(null);
+    setAddCategory("");
   }
 
   function showEditCategory(items) {
@@ -23,133 +24,159 @@ export default function AdminCategoryPage() {
     setShowAddCategoryForm(false);
   }
 
-  async function handleAddCategory(e) {
-    e.preventDefault();
-    await createCategory({ name: addCategory });
-    setAddCategory("");
-  }
-
-  async function handleEditCategory(e) {
-    e.preventDefault();
-    await editCategory(editId, editCategoryName);
+  function cancelEdit() {
     setEditId(null);
     setEditCategoryName("");
   }
 
-  async function handleDeleteCategory(id) {
-    if (confirm("Delete this category?")) {
-      await deleteCategory(id);
+  async function handleAddCategory(e) {
+    e.preventDefault();
+    if (!addCategory.trim()) return;
+    
+    await createCategory({ name: addCategory });
+    setAddCategory("");
+    setShowAddCategoryForm(false);
+  }
+
+  async function handleEditCategory(e) {
+    e.preventDefault();
+    if (!editCategoryName.trim()) return;
+    
+    await editCategory(editId, editCategoryName);
+    cancelEdit();
+  }
+
+  async function handleDeleteCategory(id, name) {
+    if (!confirm(`Are you sure you want to delete "${name}"?`)) {
+      return;
     }
+    await deleteCategory(id);
   }
 
   return (
-    <div>
-      <div>
-        <div className="flex items-center gap-4 mb-4">
-          <AdminTitle>Category of Product</AdminTitle>
-          <button
-            onClick={() => showAddCategory()}
-            className="bg-[#111] text-[#fff] p-2 cursor-pointer hover:bg-[#000]"
-          >
-            <Plus />
-          </button>
-        </div>
-        {showAddCategoryForm && (
-          <form onSubmit={handleAddCategory}>
-            <div className="flex shadow-lg">
-              <input
-                type="text"
-                value={addCategory}
-                onChange={(e) => setAddCategory(e.target.value)}
-                placeholder="Add Category"
-                className="border border-black/40 py-[1.25rem] px-[1.4rem] focus:outline-none focus:border focus:border-[#111] text-[1.4rem]"
-              />
-              <button className="bg-[#111] text-[#fff] p-[1.2rem] cursor-pointer hover:bg-[#000]">
-                <Plus />
-              </button>
-            </div>
-          </form>
-        )}
+    <div className="p-6">
+      <div className="flex items-center justify-between mb-6">
+        <AdminTitle>Category of Product</AdminTitle>
+        <button
+          onClick={showAddCategory}
+          className="flex items-center gap-2 bg-[#111] text-white px-4 py-2 rounded hover:bg-[#000] transition-colors"
+        >
+          <Plus size={20} />
+          Add Category
+        </button>
       </div>
-      <div className="relative max-h-[880px] overflow-y-auto no-scrollbar border-y border-y-[#111]">
-        <table className="w-full text-left rtl:text-right text-[#111] border border-[#111] table-fixed shadow-lg">
-          <thead className="text-[#fff] bg-[#111] sticky top-0 z-10">
-            <tr>
-              <th scope="col" className="w-16 text-center px-4 py-4">
-                No
-              </th>
-              <th scope="col" className="px-4 py-4">
-                Category
-              </th>
-              <th scope="col" className="px-4 py-4">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr className="w-full">
-                <td colSpan="3" className="px-[40%] py-[3.2rem]">
-                  Loading category data
-                </td>
+
+      {/* Add Category Form */}
+      {showAddCategoryForm && (
+        <form onSubmit={handleAddCategory} className="mb-6">
+          <div className="flex gap-3">
+            <input
+              type="text"
+              value={addCategory}
+              onChange={(e) => setAddCategory(e.target.value)}
+              placeholder="Enter category name"
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Add
+            </button>
+            <button
+              type="button"
+              onClick={showAddCategory}
+              className="px-4 py-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      )}
+
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-gray-900">
+              <tr>
+                <th className="w-16 px-6 py-4 font-semibold text-white border-b">No</th>
+                <th className="px-6 py-4 font-semibold text-white border-b">Category Name</th>
+                <th className="px-6 py-4 font-semibold text-white border-b">Actions</th>
               </tr>
-            ) : (
-              category.map((items, index) => (
-                <tr key={items.id}>
-                  <td className="w-16 text-center px-4 py-4 border-t border-t-[#111]/25">
-                    {index + 1}
-                  </td>
-                  <td className="px-4 py-4 border-t border-t-[#111]/25">
-                    {items.name}
-                  </td>
-                  <td className="px-4 py-4 border-t border-t-[#111]/25">
-                    {editId === items.id ? (
-                      <form
-                        onSubmit={handleEditCategory}
-                        className="flex gap-[1.2rem]"
-                      >
-                        <input
-                          value={editCategoryName}
-                          onChange={(e) => setEditCategoryName(e.target.value)}
-                          className="outline outline-[#111]"
-                        />
-                        <button
-                          type="submit"
-                          className="px-[1.2rem] bg-[#111] text-[#fff] cursor-pointer hover:bg-[#000]"
-                        >
-                          Save
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setEditId(null)}
-                          className="px-[1.2rem] bg-[#111] text-[#fff] cursor-pointer hover:bg-[#000]"
-                        >
-                          Cancel
-                        </button>
-                      </form>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() => showEditCategory(items)}
-                          className="hover:underline cursor-pointer"
-                        >
-                          Edit
-                        </button>
-                        <span> | </span>
-                        <button
-                          onClick={() => handleDeleteCategory(items.id)}
-                          className="hover:underline cursor-pointer"
-                        >
-                          Delete
-                        </button>
-                      </>
-                    )}
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {loading ? (
+                <tr>
+                  <td colSpan="3" className="px-6 py-8 text-center">
+                    <div className="flex justify-center items-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                      <span className="ml-2">Loading categories...</span>
+                    </div>
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : category.length === 0 ? (
+                <tr>
+                  <td colSpan="3" className="px-6 py-8 text-center text-gray-500">
+                    No categories found. Click "Add Category" to create one.
+                  </td>
+                </tr>
+              ) : (
+                category.map((items, index) => (
+                  <tr key={items.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4 text-center">{index + 1}</td>
+                    <td className="px-6 py-4">
+                      {editId === items.id ? (
+                        <form onSubmit={handleEditCategory} className="flex gap-3">
+                          <input
+                            value={editCategoryName}
+                            onChange={(e) => setEditCategoryName(e.target.value)}
+                            placeholder="Enter category name"
+                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            required
+                          />
+                          <button
+                            type="submit"
+                            className="px-3 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
+                          >
+                            Save
+                          </button>
+                          <button
+                            type="button"
+                            onClick={cancelEdit}
+                            className="px-3 py-2 text-gray-700 bg-gray-100 border border-gray-300 text-sm rounded hover:bg-gray-200 transition-colors"
+                          >
+                            Cancel
+                          </button>
+                        </form>
+                      ) : (
+                        <span className="font-medium text-gray-900">{items.name}</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
+                      {editId !== items.id && (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => showEditCategory(items)}
+                            className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteCategory(items.id, items.name)}
+                            className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition-colors"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
