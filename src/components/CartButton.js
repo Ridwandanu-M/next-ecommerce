@@ -11,6 +11,7 @@ export default function CartButton({ productId }) {
     setIsLoading(true);
     setError("");
     try {
+      console.log('Adding to cart - Product ID:', productId, 'Type:', typeof productId);
       await axios.post("/api/cart", { productId: productId });
     } catch (e) {
       console.error(`Failed to add product to cart: ${e}`);
@@ -24,7 +25,7 @@ export default function CartButton({ productId }) {
     <button
       onClick={handleAddToCart}
       disabled={isLoading}
-      className="flex justify-center border border-[#111] bg-[#111] text-[#fff] text-md py-2 hover:text-[#111] hover:bg-[#fff] cursor-pointer"
+      className="flex justify-center border border-[#111] bg-[#111] text-[#fff] text-md py-2 hover:text-[#111] hover:bg-[#fff] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {isLoading ? "Adding to cart..." : "Add to Cart"}
     </button>

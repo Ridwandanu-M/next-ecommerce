@@ -4,20 +4,39 @@ import slugify from "slugify";
 const prisma = new PrismaClient();
 
 function serializeProduct(product) {
-  return { ...product, price: product.price ? product.price.toString() : null };
+  return { 
+    ...product, 
+    price: product.price ? product.price.toString() : null 
+  };
 }
 
 export async function GET() {
-  const products = await prisma.product.findMany({
-    orderBy: { created_at: "desc" },
-    include: {
-      category: true,
-    },
-  });
+  try {
+    const products = await prisma.product.findMany({
+      orderBy: { created_at: "desc" },
+      include: {
+        category: true,
+      },
+    });
 
-  return new Response(JSON.stringify(products.map(serializeProduct)), {
-    headers: { "Content-Type": "application/json" },
-  });
+    console.log('Products fetched:', products.length);
+    if (products.length > 0) {
+      console.log('First product ID:', products[0].id, 'Type:', typeof products[0].id);
+    }
+
+    return new Response(JSON.stringify(products.map(serializeProduct)), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (e) {
+    console.error("Error fetching products:", e);
+    return new Response(
+      JSON.stringify({ error: "Failed to fetch products" }),
+      { 
+        status: 500,
+        headers: { "Content-Type": "application/json" } 
+      }
+    );
+  }
 }
 
 export async function POST(req) {
